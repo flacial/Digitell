@@ -1,5 +1,6 @@
 "use strict";
 import React from 'react';
+
 function App() {
     return (
         <View style={styles.container}>
@@ -8,8 +9,10 @@ function App() {
         </View>
     );
 }
+
 exports["default"] = App;
-var styles = react_native_1.StyleSheet.create({
+
+let styles = react_native_1.StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
