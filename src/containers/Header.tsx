@@ -3,7 +3,7 @@ import * as React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 
-function App() {
+function Header() {
     return (
         <View style={styles.container}>
             <Text>Open up App.tsx to start working on your app!</Text>
@@ -11,7 +11,7 @@ function App() {
         </View>
     )
 }
-export default App
+export default Header
 const styles = StyleSheet.create({
     container: {
         flex: 1,
