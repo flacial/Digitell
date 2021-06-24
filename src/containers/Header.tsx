@@ -1,19 +1,17 @@
 
 import * as React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+import globalStyles from '../styles/styles'
 import { StatusBar } from 'expo-status-bar'
-import Header from './Header'
 
-function App() {
+function Header() {
     return (
         <View style={styles.container}>
-            <Header />
-            <Text>Open up App.tsx to start working on your app!</Text>
-            <StatusBar style="auto" />
+            <Text style={{ globalStyles }}></Text>
         </View>
     )
 }
-export default App
+export default Header
 const styles = StyleSheet.create({
     container: {
         flex: 1,
