@@ -1,4 +1,4 @@
-const colors = {
+const Colors = {
     brand: {
         primary: "#696AC3",
         secondary: "#5D6CC6",
@@ -26,4 +26,5 @@ const colors = {
         success: "#138000",
     },
 };
-export default colors
+
+export default Colors
