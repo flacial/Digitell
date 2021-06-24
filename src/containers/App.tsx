@@ -3,12 +3,13 @@ import * as React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import Header from './Header'
+import Guesser from '../components/guesser/guesser'
 
 function App() {
     return (
         <View style={styles.container}>
-            <Header />
-            <Text>Open up App.tsx to start working on your app!</Text>
+            <Guesser />
+            {/* <Header /> */}
             <StatusBar style="auto" />
         </View>
     )
@@ -19,6 +20,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        display: "flex",
+        margin: 'auto',
+        flexDirection: "row"
     },
 }) 

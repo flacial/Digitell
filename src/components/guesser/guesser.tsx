@@ -1,0 +1,105 @@
+import React, { useState } from "react";
+import { SafeAreaView, Text, StyleSheet } from "react-native";
+
+import {
+  CodeField,
+  Cursor,
+  useBlurOnFulfill,
+  useClearByFocusCell,
+} from "react-native-confirmation-code-field";
+
+const styles = StyleSheet.create({
+  root: { flex: 1, padding: 20 },
+  title: { textAlign: "center", fontSize: 30 },
+  codeFieldRoot: { marginTop: 20, justifyContent: "center" },
+  cell: {
+    width: 40,
+    height: 40,
+    lineHeight: 38,
+    fontSize: 24,
+    borderWidth: 2,
+    borderColor: "#ff7575",
+    textAlign: "center",
+    borderRadius: 7,
+    marginRight: 4,
+  },
+  focusCell: {
+    borderColor: "#fa4242",
+  },
+});
+
+const Guesser = () => {
+  const [value, setValue] = useState("");
+  //   const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
+  const [props, getCellOnLayoutHandler] = useClearByFocusCell({
+    value,
+    setValue,
+  });
+
+  const [counter, setCounter] = useState(0);
+  const [currentBinary, setCurrentBinary] = useState("0");
+
+  // Function to guess the next number
+  const guessBinary = (): string => {
+    const next: string = (counter + 1).toString(2);
+    return next;
+  };
+
+  // Set the cell count to the next digit length
+  const CELL_COUNT = guessBinary().length;
+
+  // Function to check if the input is correct
+  const isCorrect = (inputValue: string | null): void => {
+    if (inputValue === guessBinary()) {
+      console.log("Correct Answer! \n");
+      console.log(
+        `Counter value was: ${counter}, Next Binary was: ${guessBinary()} \n`
+      );
+
+      setCounter((prevState) => {
+        let prevStateValue = prevState + 1;
+        setCurrentBinary(prevStateValue.toString(2));
+        return prevStateValue;
+      });
+
+    } else {
+      setValue('')
+      alert("Wrong Answer")
+    }
+  };
+
+  const onEnterPress = (e: any) => {
+    if (e.nativeEvent.key === "Enter") {
+      isCorrect(value);
+      setValue("");
+    }
+  };
+
+  return (
+    <SafeAreaView style={styles.root}>
+      <Text style={styles.title}>Current Binary is: {currentBinary}</Text>
+      <CodeField
+        onKeyPress={(e) => onEnterPress(e)}
+        {...props}
+        // Use `caretHidden={false}` when users can't paste a text value, because context menu doesn't appear
+        value={value}
+        onChangeText={setValue}
+        cellCount={CELL_COUNT}
+        rootStyle={styles.codeFieldRoot}
+        keyboardType="number-pad"
+        textContentType="oneTimeCode"
+        renderCell={({ index, symbol, isFocused }) => (
+          <Text
+            key={index}
+            style={[styles.cell, isFocused && styles.focusCell]}
+            onLayout={getCellOnLayoutHandler(index)}
+          >
+            {symbol || (isFocused ? <Cursor /> : null)}
+          </Text>
+        )}
+      />
+    </SafeAreaView>
+  );
+};
+
+export default Guesser;

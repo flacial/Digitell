@@ -1,25 +1,22 @@
 import * as React from "react";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import Colors from "../styles/styles";
 import { StatusBar } from "expo-status-bar";
-import tailwind from "tailwind-rn";
+import styled from 'styled-components/native'
+
+const StyledText = styled.Text`
+    color: red;
+    font-size: 30;
+    font-weight: bold;
+`
 
 function Header() {
   return (
-    // <View style={styles.container}>
-    //     <Text style={{color: Colors.text.primary}}>
-    //         Digitell
-    //     </Text>
-    // </View>
-    <SafeAreaView style={tailwind("h-full")}>
-      <View style={tailwind("pt-12 items-center")}>
-        <View style={tailwind("bg-blue-200 px-3 py-1 rounded-full")}>
-          <Text style={tailwind("text-blue-800 font-semibold")}>
-            Hello Tailwind
-          </Text>
-        </View>
-      </View>
-    </SafeAreaView>
+    <View style={styles.container}>
+        <StyledText>
+            Digitell
+        </StyledText>
+    </View>
   );
 }
 
