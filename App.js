@@ -1,11 +1,11 @@
-"use strict"; 
-import React from 'react';  
+"use strict";
+import React from 'react';
 function App() {
     return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto"/>
-    </View>
+        <View style={styles.container}>
+            <Text>Open up App.tsx to start working on your app!</Text>
+            <StatusBar style="auto" />
+        </View>
     );
 }
 exports["default"] = App;
