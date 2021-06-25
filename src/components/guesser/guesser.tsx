@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, Text, StyleSheet } from "react-native";
+import { SafeAreaView, Text, StyleSheet, Platform } from "react-native";
 
 import {
   CodeField,
@@ -51,27 +51,31 @@ const Guesser = () => {
   // Function to check if the input is correct
   const isCorrect = (inputValue: string | null): void => {
     if (inputValue === guessBinary()) {
-      console.log("Correct Answer! \n");
-      console.log(
-        `Counter value was: ${counter}, Next Binary was: ${guessBinary()} \n`
-      );
-
-      setCounter((prevState) => {
+      setCounter((prevState: any) => {
         let prevStateValue = prevState + 1;
         setCurrentBinary(prevStateValue.toString(2));
         return prevStateValue;
       });
-
     } else {
-      setValue('')
-      alert("Wrong Answer")
+      alert("Wrong Answer!");
     }
   };
 
-  const onEnterPress = (e: any) => {
-    if (e.nativeEvent.key === "Enter") {
-      isCorrect(value);
-      setValue("");
+  // #mixCode
+  const onEnterPress = (e: any): void => {
+    if (Platform.OS === "web") {
+      if (e.nativeEvent.key === "Enter") {
+        isCorrect(value);
+        setValue("");
+      }
+      return;
+    }
+
+    if (Platform.OS === "android" || Platform.OS === "ios") {
+      if (e.nativeEvent.text && e.nativeEvent.target) {
+        setValue("");
+        isCorrect(value);
+      }
     }
   };
 
@@ -79,7 +83,7 @@ const Guesser = () => {
     <SafeAreaView style={styles.root}>
       <Text style={styles.title}>Current Binary is: {currentBinary}</Text>
       <CodeField
-        onKeyPress={(e) => onEnterPress(e)}
+        onSubmitEditing={(e: object) => onEnterPress(e)}
         {...props}
         // Use `caretHidden={false}` when users can't paste a text value, because context menu doesn't appear
         value={value}
