@@ -13,12 +13,12 @@ const LightTheme = {
   color: "#303030",
 };
 
-const Themes = {
+const Themes: any = {
   light: LightTheme,
   dark: DarkTheme,
 };
 
-const Cwrapper = (props) => {
+const Cwrapper = (props: { children: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; }) => {
   const theme = useSelector((state) => state.theme.themeMode);
   const currentThemeStyles = Themes[theme];
 
