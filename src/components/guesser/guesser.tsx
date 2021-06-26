@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { SafeAreaView, Text, StyleSheet, Platform } from "react-native";
 import { SafeAreaView, Text, StyleSheet } from "react-native";
 import Button from '@material-ui/core/Button'
 
@@ -49,59 +50,62 @@ const Guesser = () => {
     // Set the cell count to the next digit length
     const CELL_COUNT = guessBinary().length;
 
-    // Function to check if the input is correct
-    const isCorrect = (inputValue: string | null): void => {
-        if (inputValue === guessBinary()) {
-            console.log("Correct Answer! \n");
-            console.log(
-                `Counter value was: ${counter}, Next Binary was: ${guessBinary()} \n`
-            );
+  // Function to check if the input is correct
+  const isCorrect = (inputValue: string | null): void => {
+    if (inputValue === guessBinary()) {
+      setCounter((prevState: any) => {
+        let prevStateValue = prevState + 1;
+        setCurrentBinary(prevStateValue.toString(2));
+        return prevStateValue;
+      });
+    } else {
+      alert("Wrong Answer!");
+    }
+  };
 
-            setCounter((prevState) => {
-                let prevStateValue = prevState + 1;
-                setCurrentBinary(prevStateValue.toString(2));
-                return prevStateValue;
-            });
+  // #mixCode
+  const onEnterPress = (e: any): void => {
+    if (Platform.OS === "web") {
+      if (e.nativeEvent.key === "Enter") {
+        isCorrect(value);
+        setValue("");
+      }
+      return;
+    }
 
-        } else {
-            setValue('')
-            alert("Wrong Answer")
-        }
-    };
+    if (Platform.OS === "android" || Platform.OS === "ios") {
+      if (e.nativeEvent.text && e.nativeEvent.target) {
+        setValue("");
+        isCorrect(value);
+      }
+    }
+  };
 
-    const onEnterPress = (e: any) => {
-        if (e.nativeEvent.key === "Enter") {
-            isCorrect(value);
-            setValue("");
-        }
-    };
-
-    return (
-        <SafeAreaView style={styles.root}>
-            <Text style={styles.title}>Current Binary is: {currentBinary}</Text>
-            <CodeField
-                onKeyPress={(e: any) => onEnterPress(e)}
-                {...props}
-                // Use `caretHidden={false}` when users can't paste a text value, because context menu doesn't appear
-                value={value}
-                onChangeText={setValue}
-                cellCount={CELL_COUNT}
-                rootStyle={styles.codeFieldRoot}
-                keyboardType="number-pad"
-                textContentType="oneTimeCode"
-                renderCell={({ index, symbol, isFocused }) => (
-                    <Text
-                        key={index}
-                        style={[styles.cell, isFocused && styles.focusCell]}
-                        onLayout={getCellOnLayoutHandler(index)}
-                    >
-                        {symbol || (isFocused ? <Cursor /> : null)}
-                    </Text>
-                )}
-            />
-            <Button /*onClick={advance}*/>Advance</Button>
-        </SafeAreaView>
-    );
+  return (
+    <SafeAreaView style={styles.root}>
+      <Text style={styles.title}>Current Binary is: {currentBinary}</Text>
+      <CodeField
+        onSubmitEditing={(e: object) => onEnterPress(e)}
+        {...props}
+        // Use `caretHidden={false}` when users can't paste a text value, because context menu doesn't appear
+        value={value}
+        onChangeText={setValue}
+        cellCount={CELL_COUNT}
+        rootStyle={styles.codeFieldRoot}
+        keyboardType="number-pad"
+        textContentType="oneTimeCode"
+        renderCell={({ index, symbol, isFocused }) => (
+          <Text
+            key={index}
+            style={[styles.cell, isFocused && styles.focusCell]}
+            onLayout={getCellOnLayoutHandler(index)}
+          >
+            {symbol || (isFocused ? <Cursor /> : null)}
+          </Text>
+        )}
+      />
+    </SafeAreaView>
+  );
 };
 
 export default Guesser;
