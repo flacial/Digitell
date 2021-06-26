@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { SafeAreaView, Text, StyleSheet, Platform } from "react-native";
-import { SafeAreaView, Text, StyleSheet } from "react-native";
 import Button from '@material-ui/core/Button'
 
 import {
