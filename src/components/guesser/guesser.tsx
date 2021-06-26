@@ -10,7 +10,7 @@ import {
 } from "react-native-confirmation-code-field";
 
 const styles = StyleSheet.create({
-    root: { flex: 1, padding: 20 },
+    root: { flex: 1, padding: 20, marginTop: 50 },
     title: { textAlign: "center", fontSize: 30 },
     codeFieldRoot: { marginTop: 20, justifyContent: "center" },
     cell: {
