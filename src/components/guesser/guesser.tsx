@@ -1,52 +1,54 @@
 import React, { useState } from "react";
 import { SafeAreaView, Text, StyleSheet, Platform } from "react-native";
+import { SafeAreaView, Text, StyleSheet } from "react-native";
+import Button from '@material-ui/core/Button'
 
 import {
-  CodeField,
-  Cursor,
-  useBlurOnFulfill,
-  useClearByFocusCell,
+    CodeField,
+    Cursor,
+    useBlurOnFulfill,
+    useClearByFocusCell,
 } from "react-native-confirmation-code-field";
 
 const styles = StyleSheet.create({
-  root: { flex: 1, padding: 20 },
-  title: { textAlign: "center", fontSize: 30 },
-  codeFieldRoot: { marginTop: 20, justifyContent: "center" },
-  cell: {
-    width: 40,
-    height: 40,
-    lineHeight: 38,
-    fontSize: 24,
-    borderWidth: 2,
-    borderColor: "#ff7575",
-    textAlign: "center",
-    borderRadius: 7,
-    marginRight: 4,
-  },
-  focusCell: {
-    borderColor: "#fa4242",
-  },
+    root: { flex: 1, padding: 20 },
+    title: { textAlign: "center", fontSize: 30 },
+    codeFieldRoot: { marginTop: 20, justifyContent: "center" },
+    cell: {
+        width: 40,
+        height: 40,
+        lineHeight: 38,
+        fontSize: 24,
+        borderWidth: 2,
+        borderColor: "#ff7575",
+        textAlign: "center",
+        borderRadius: 7,
+        marginRight: 4,
+    },
+    focusCell: {
+        borderColor: "#fa4242",
+    },
 });
 
 const Guesser = () => {
-  const [value, setValue] = useState("");
-  //   const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
-  const [props, getCellOnLayoutHandler] = useClearByFocusCell({
-    value,
-    setValue,
-  });
+    const [value, setValue] = useState("");
+    //   const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
+    const [props, getCellOnLayoutHandler] = useClearByFocusCell({
+        value,
+        setValue,
+    });
 
-  const [counter, setCounter] = useState(0);
-  const [currentBinary, setCurrentBinary] = useState("0");
+    const [counter, setCounter] = useState(0);
+    const [currentBinary, setCurrentBinary] = useState("0");
 
-  // Function to guess the next number
-  const guessBinary = (): string => {
-    const next: string = (counter + 1).toString(2);
-    return next;
-  };
+    // Function to guess the next number
+    const guessBinary = (): string => {
+        const next: string = (counter + 1).toString(2);
+        return next;
+    };
 
-  // Set the cell count to the next digit length
-  const CELL_COUNT = guessBinary().length;
+    // Set the cell count to the next digit length
+    const CELL_COUNT = guessBinary().length;
 
   // Function to check if the input is correct
   const isCorrect = (inputValue: string | null): void => {
