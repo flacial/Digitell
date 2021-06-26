@@ -1,7 +1,6 @@
 import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { StatusBar } from "expo-status-bar";
-import currentTheme from '../../src/styles/currentTheme'
+import colors from '../styles/colors'
 import styled from 'styled-components/native'
 
 const StyledText = styled.Text`
@@ -24,7 +23,7 @@ function Header() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: `${currentTheme.bg}`,
+        backgroundColor: `${colors.bg}`,
         alignItems: "center",
         justifyContent: "center",
         height: 20,
