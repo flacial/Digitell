@@ -12,35 +12,35 @@ const StyledText = styled.Text`
 `;
 
 const Header = () => {
-  const themeMode = useSelector((state) => state.theme.themeMode);
-  const dispatch = useDispatch();
+    const themeMode = useSelector((state: any) => state.theme.themeMode);
+    const dispatch = useDispatch();
 
-  const switchMode = () => {
-    dispatch(setThemeMode());
-  };
+    const switchMode = () => {
+        dispatch(setThemeMode());
+    };
 
-  return (
-    <View style={styles.container}>
-      <StyledText>Digitell</StyledText>
-      <Button
-        onPress={switchMode}
-        title={`Change Mode to ${themeMode === "light" ? "Dark" : "Light"}`}
-      />
-      <Text style={{ margin: 10 }}>#DEV</Text>
-    </View>
-  );
+    return (
+        <View style={styles.container}>
+            <StyledText>Digitell</StyledText>
+            <Button
+                onPress={switchMode}
+                title={`Change Mode to ${themeMode === "light" ? "Dark" : "Light"}`}
+            />
+            <Text style={{ margin: 10 }}>#DEV</Text>
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: `${colors.bg}`,
-    alignItems: "center",
-    justifyContent: "center",
-    height: 20,
-    // flexDirection: "row",
-    margin: 2,
-  },
+    container: {
+        flex: 1,
+        backgroundColor: `${colors.bg}`,
+        alignItems: "center",
+        justifyContent: "center",
+        height: 20,
+        // flexDirection: "row",
+        margin: 2,
+    },
 });
 
 export default Header;
