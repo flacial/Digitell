@@ -1178,6 +1178,11 @@
   resolved "https://registry.yarnpkg.com/@expo-google-fonts/inter/-/inter-0.1.0.tgz#399f068437824fcbf6aa3da5fcf490dba2af85a3"
   integrity sha512-Y6GCqsUX6JwexQ2wmBkMiJBY6M2GpNQRTczzIGbBGhXWQxqGmP5awRcf0ZJV+OlLeJcKAzas/TW45ZLdpG3yzA==
 
+"@expo-google-fonts/vt323@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/vt323/-/vt323-0.1.0.tgz#c13b116132696761c5d451e82754358ce511449a"
+  integrity sha512-ujKbvcUTp8/bi4reH69sjD3T2fq3tMyC8MTOLzDBWusY8mgsgugKl6qnP+nEt98NSkoG1ggjAiA9X3Qd8mV12A==
+
 "@expo/config-plugins@1.0.33", "@expo/config-plugins@^1.0.18":
   version "1.0.33"
   resolved "https://registry.npmjs.org/@expo/config-plugins/-/config-plugins-1.0.33.tgz"
