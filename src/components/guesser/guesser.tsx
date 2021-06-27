@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, Text, StyleSheet, Platform } from "react-native";
-import Button from '@material-ui/core/Button'
+import { SafeAreaView, Text, StyleSheet, Platform, Button } from "react-native";
 
 import {
     CodeField,
@@ -103,9 +102,7 @@ const Guesser = () => {
                     </Text>
                 )}
             />
-            <Button color="primary" onClick={() => new KeyboardEvent('keypress', { key: 'enter', })}>
-                Advance
-            </Button>
+            <Button color="red" title="Advance" onPress={() => {}}/>
         </SafeAreaView >
     );
 };
