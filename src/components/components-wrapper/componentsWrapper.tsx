@@ -1,22 +1,9 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components/native";
 import { useSelector } from "react-redux";
-import { ImageBackground, View, StatusBar } from "react-native";
-
-const DarkTheme = {
-  background: "#272727",
-  TextColor: "#fff7db",
-};
-
-const LightTheme = {
-  background: "#f0f0f0",
-  TextColor: "#EFEFEF",
-};
-
-const Themes: any = {
-  light: LightTheme,
-  dark: DarkTheme,
-};
+import { ImageBackground, View } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import Themes from '../../styles/theme/theme'
 
 const Cwrapper = (props: {
   children:
@@ -32,9 +19,17 @@ const Cwrapper = (props: {
 
   return (
     <ThemeProvider theme={currentThemeStyles}>
+      <StatusBar
+        style={theme}
+        animated={true}
+        backgroundColor={currentThemeStyles.statusBarBg}
+        hideTransitionAnimation={"slide"}
+        hidden={false}
+        translucent={true}
+      />
       <View
         style={{
-          backgroundColor: "#000000",
+          backgroundColor: currentThemeStyles.bodyBackground,
           alignItems: "center",
           justifyContent: "center",
           display: "flex",
@@ -42,34 +37,31 @@ const Cwrapper = (props: {
           height: "100%",
         }}
       >
-           <StatusBar
-        animated={true}
-        backgroundColor="#61dafb"
-        barStyle={"light-content"}
-        showHideTransition={"slide"}
-        hidden={false} />
         <ImageBackground
-          source={require("../../assets/images/darkThemeBg.png")}
+          source={
+              theme === "light" 
+              ? require("../../assets/images/lightThemeBg.png")
+              : require("../../assets/images/darkThemeBg.png")
+            }
           style={{
             width: "100%",
             height: "100%",
-            opacity: 0.5,
-            position: "absolute"
+            opacity: currentThemeStyles.appBgOpacity,
+            position: "absolute",
+          }}
+        ></ImageBackground>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            display: "flex",
+            width: "100%",
+            height: "100%",
+            paddingTop: 100,
           }}
         >
-            </ImageBackground>
-          <View
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              display: "flex",
-              width: "100%",
-              height: "100%",
-              paddingTop: 100
-            }}
-          >
-            {props.children}
-          </View>
+          {props.children}
+        </View>
       </View>
     </ThemeProvider>
   );
