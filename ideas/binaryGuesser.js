@@ -9,8 +9,8 @@ var promptUser = require("prompt-sync")();
 var counter = 0;
 var currentBinary = "0";
 // Function to guess the next number
-var guessBinary = function () {
-    var next = (counter + 1).toString(2);
+var guessBinary = function (counterValue) {
+    var next = (counterValue + 1).toString(2);
     return next;
 };
 var getInput = function () {
@@ -32,3 +32,9 @@ var isCorrect = function (inputValue) {
     }
 };
 getInput();
+
+module.exports = {
+    guessBinary,
+    isCorrect,
+    getInput
+}
