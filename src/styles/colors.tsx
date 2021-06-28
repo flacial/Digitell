@@ -2,8 +2,8 @@ import isDarkTheme from './isDarkTheme'
 
 const Colors = {
     view: {
-        bg: isDarkTheme() ? '#ffffff' : '#111111',
-        fg: isDarkTheme() ? '#222222' : '#efefef',
+        bg: isDarkTheme() ? '#111111' : '#ffffff',
+        text: isDarkTheme() ? '#efefef' : '#222222',
     },
     brand: {
         primary: "#696AC3",

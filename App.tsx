@@ -8,15 +8,15 @@ import { Provider } from "react-redux";
 import Cwrapper from "./src/components/components-wrapper/componentsWrapper";
 
 const App = () => {
-  return (
-    <Provider store={store}>
-      <Cwrapper>
-        <Header />
-        <Guesser />
-        <StatusBar style="auto" />
-      </Cwrapper>
-    </Provider>
-  );
+    return (
+        <Provider store={store}>
+            <Cwrapper>
+                <Header />
+                <Guesser />
+                <StatusBar style="auto" />
+            </Cwrapper>
+        </Provider>
+    );
 };
 
 // const styles = StyleSheet.create({
