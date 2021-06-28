@@ -13,6 +13,7 @@
     "@expo-google-fonts/inter": "^0.1.0",
     "@expo-google-fonts/vt323": "^0.1.0",
     "@reduxjs/toolkit": "^1.6.0",
+    "@types/react-redux": "^7.1.16",
     "@types/styled-components-react-native": "^5.1.1",
     "expo": "~41.0.1",
     "expo-app-loading": "^1.0.3",
@@ -33,7 +34,7 @@
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@types/react": "~16.9.35",
-    "@types/react-native": "~0.63.2",
+    "@types/react-native": "^0.64.10",
     "@types/styled-components": "^5.1.10",
     "react-native-bundle-visualizer": "^2.2.1",
     "typescript": "~4.0.0"
