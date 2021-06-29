@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 const ScoresContainer = styled.View`
   width: 330;
   height: 64;
-  background: #5eb8ff;
+  background: ${props => props.theme.containersBg};
   border-radius: 25;
   margin-top: 48;
   justify-content: space-between;
@@ -19,7 +19,7 @@ const ScoresContainer = styled.View`
 `;
 
 const PointsText = styled.Text`
-    color: ${props => props.theme.binaryText}
+    color: ${(props: {theme: {binaryText: string}}) => props.theme.binaryText}
 `;
 
 const Scores = () => {
@@ -27,7 +27,9 @@ const Scores = () => {
     VT323_400Regular,
   });
 
-  const scoreValue = useSelector(state => state.score.scoreValue)
+  const scoreValue = useSelector(
+    (state: { score: { scoreValue: string } }) => state.score.scoreValue
+  );
 
   return (
     fontsLoaded ? 

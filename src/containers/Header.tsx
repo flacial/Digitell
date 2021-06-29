@@ -27,13 +27,14 @@ const Header = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <StyledText>{scoreType}</StyledText>
+    <View>
       {/* <Button
         onPress={() => switchMode()}
         title={`${themeMode === "light" ? "Dark" : "Light"}`}
         color="rgb(59, 255, 108)"
-      /> */}
+        /> */}
+    <View style={styles.container}>
+      <StyledText>{scoreType}</StyledText>
       <Svg
         width="28"
         height="28"
@@ -46,6 +47,7 @@ const Header = () => {
         />
       </Svg>
     </View>
+    </View>
   );
 };
 
@@ -56,7 +58,7 @@ const styles = StyleSheet.create({
     height: 20,
     margin: 2,
     flexDirection: "row",
-    textAlign: 'center'
+    textAlign: 'center',
   },
 });
 

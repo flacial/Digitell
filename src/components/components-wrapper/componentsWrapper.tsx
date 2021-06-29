@@ -53,7 +53,7 @@ const Cwrapper = (props: {
         <View
           style={{
             alignItems: "center",
-            justifyContent: "center",
+            // justifyContent: "center",
             display: "flex",
             width: "100%",
             height: "100%",

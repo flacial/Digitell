@@ -10,8 +10,8 @@ export const scoreSlice = createSlice({
     setScoreType: (state, action) => {
         state.scoreType = action.payload
     },
-    setScoreValue: (state) => {
-      state.scoreValue += 10
+    setScoreValue: (state, action) => {
+      state.scoreValue += action.payload
     }
   },
 });

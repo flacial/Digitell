@@ -4,7 +4,8 @@ const DarkTheme = {
     statusBarBg: "#5eb9ffad",
     bodyBackground: "#000000",
     appBgOpacity: 0.5,
-    binaryText: "#222222"
+    binaryText: "#222222",
+    containersBg: "#5eb8ff"
   };
   
   const LightTheme = {
@@ -13,7 +14,8 @@ const DarkTheme = {
     statusBarBg: "#005B9F",
     bodyBackground: "#FFFFFF",
     appBgOpacity: 0.2,
-    binaryText: "#F2F2FF"
+    binaryText: "#F2F2FF",
+    containersBg: "#005B9F"
   };
   
   const Themes: any = {
