@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   codeFieldRoot: { justifyContent: "center" },
   cell: {},
   focusCell: {
-    // borderColor: "#fa4242",
+    borderColor: "#C75B39",
   },
 });
 

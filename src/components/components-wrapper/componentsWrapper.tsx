@@ -57,7 +57,7 @@ const Cwrapper = (props: {
             display: "flex",
             width: "100%",
             height: "100%",
-            paddingTop: 100,
+            paddingTop: 70,
           }}
         >
           {props.children}
