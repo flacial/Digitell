@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
     height: 50,
     display: 'flex',
     marginBottom: 20,
-    // transition: 'all 0.2s ease',
     marginLeft: 20,
     textAlign: 'center',
     justifyContent: 'center',
@@ -67,8 +66,6 @@ const styles = StyleSheet.create({
     fontSize: 36,
     lineHeight: 51,
     color: '#5EB8FF',
-    elevation: -1,
-    zIndex: -1
   },
   buttonsContainer: {
     flexDirection: 'row',
@@ -219,6 +216,7 @@ export default function CodeInput() {
             styles.cell,
             cellIndex === i ? styles.focusedCell : styles.unfocusedCell,
             { transform: [{ translateY: cellsAnims[0][i] }] },
+            Platform.OS === 'web' && {userSelect: 'none'}
           ]}
         >
           {
@@ -270,6 +268,7 @@ export default function CodeInput() {
             strokeOpacity="0.87"
             strokeLinecap="round"
             strokeLinejoin="round"
+            style={Platform.OS === 'web' && {userSelect: 'none'}}
           >
             <Path
               d="M12.75 2.75L2.25 11L12.75 19.25"
@@ -282,12 +281,12 @@ export default function CodeInput() {
           </Svg>
         </Pressable>
         <Pressable
-          style={ ({pressed}) => [styles.buttonDigit, { marginRight: 7 }, {backgroundColor: pressed ? '#353535' : '#212121'}]}
+          style={ ({pressed}) => [styles.buttonDigit, Platform.OS === 'web' ? {cursor: 'pointer', userSelect: 'none'} : null, { marginRight: 7 }, {backgroundColor: pressed ? '#353535' : '#212121'}]}
           onPress={() => getCodeValue('0')}
         >
           <Text style={styles.buttonDigitText}>0</Text>
         </Pressable>
-        <Pressable style={styles.buttonDigit} onPress={() => getCodeValue('1')}>
+        <Pressable style={({pressed}) => [styles.buttonDigit, Platform.OS === 'web' ? {cursor: 'pointer', userSelect: 'none' } : null, {backgroundColor: pressed ? '#353535' : '#212121'}]} onPress={() => getCodeValue('1')}>
           <Text style={styles.buttonDigitText}>1</Text>
         </Pressable>
         <Pressable
@@ -304,6 +303,7 @@ export default function CodeInput() {
             strokeOpacity="0.87"
             strokeLinecap="round"
             strokeLinejoin="round"
+            style={Platform.OS === 'web' && {userSelect: 'none'}}
           >
             <Path
               d="M2.25 19.25L12.75 11L2.25 2.75"
@@ -319,7 +319,7 @@ export default function CodeInput() {
           <Pressable
                   style={styles.buttonDigit}
                   onPress={code.length ? deleteCode : null}>
-                  <Text style={{color: "white"}}>Delete</Text>
+                  <Text style={[{color: "white"}, Platform.OS === 'web' ? {userSelect: 'none'} : null]}>Delete</Text>
                 </Pressable>
         }
       </View>

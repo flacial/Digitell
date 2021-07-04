@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components/native";
 import { useSelector } from "react-redux";
-import { ImageBackground, View } from "react-native";
+import { ImageBackground, Platform, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import Themes from '../../styles/theme/theme'
 
@@ -39,7 +39,12 @@ const Cwrapper = (props: {
       >
         <ImageBackground
           source={
-              theme === "light" 
+            Platform.OS === 'web' || 'windows' || 'macos' ? (
+              theme === "light"
+              ? require("../../assets/images/lightThemeBg.png")
+              : require("../../assets/images/darkThemeBg-laptop.png") 
+            ):
+              theme === "light"
               ? require("../../assets/images/lightThemeBg.png")
               : require("../../assets/images/darkThemeBg.png")
             }

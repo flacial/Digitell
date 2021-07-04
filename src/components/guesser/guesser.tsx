@@ -65,6 +65,7 @@ const TitleStyled = styled.Text`
   font-family: VT323_400Regular;
   margin-left: 26;
   margin-bottom: 12;
+  ${Platform.OS === 'web' ? `user-select: none` : null}
 `;
 
 const CurrentDigitStyled = styled.Text`
@@ -72,6 +73,7 @@ const CurrentDigitStyled = styled.Text`
   color: ${(props: { theme: { TextColor: string } }) => props.theme.binaryText};
   font-family: Inter_400Regular;
   letter-spacing: 16;
+  ${Platform.OS === 'web' ? `user-select: none` : null}
 `;
 
 const Guesser = () => {
