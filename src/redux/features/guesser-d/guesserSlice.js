@@ -10,13 +10,16 @@ export const deleteInputCode = createAsyncThunk(
   }
 );
 
+const INITIAL_CELL_COUNT = 0
+
 export const guesserSlice = createSlice({
   name: "guesserD",
   initialState: {
     currentBinary: "0",
-    digitNumber: 0,
+    digitNumber: INITIAL_CELL_COUNT,
     inputCode: [],
     cellIndex: 0,
+    cellCount: (INITIAL_CELL_COUNT + 1).toString(2).length
   },
   reducers: {
     setInputCode: (state, action) => {
@@ -25,25 +28,21 @@ export const guesserSlice = createSlice({
     setCellIndex: (state, action) => {
       state.cellIndex += action.payload;
     },
-    setDigitNumber: (state, action) => {
-      state.digitNumber += action.payload;
+    setDigitNumber: (state, {payload}) => {
+      state.digitNumber += payload
     },
     setCurrentBinary: (state) => {
-      state.currentBinary += state.digitNumber.toString(2);
+      state.currentBinary = (state.digitNumber).toString(2);
     },
     setInputCodeManually: (state, { payload }) => {
       state.inputCode = payload;
     },
+    setCellCount: (state, {payload}) => {
+      state.cellCount = (state.digitNumber + 1).toString(2).length
+    }, clearCellIndex: (state) => {
+      state.cellIndex = 0
+    }
   },
-  // extraReducers: (builder) => {
-  //   // Add reducers for additional action types here, and handle loading state as needed
-  //   builder.addCase(deleteInputCode.fulfilled, (state, action) => {
-  //     if (state.cellIndex === state.inputCode.length) {
-  //       state.cellIndex -= 1
-  //       console.log(state.cellIndex)
-  //     }
-  //   })
-  // },
 });
 
 // Action creators are generated for each case reducer function
@@ -53,6 +52,8 @@ export const {
   setDigitNumber,
   setCurrentBinary,
   setInputCodeManually,
+  setCellCount,
+  clearCellIndex
 } = guesserSlice.actions;
 
 export default guesserSlice.reducer;
