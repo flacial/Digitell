@@ -25,6 +25,8 @@ import {
 } from '../../redux/features/score/scoreSlice';
 import CodeInput from '../code-input/code-input';
 import { Inter_400Regular } from '@expo-google-fonts/inter';
+import { setCurrentBinary, setDigitNumber } from '../../redux/features/guesser-d/guesserSlice';
+import { useSelector } from 'react-redux';
 
 const styles = StyleSheet.create({
   root: { padding: 20 },
@@ -78,6 +80,8 @@ const CurrentDigitStyled = styled.Text`
 
 const Guesser = () => {
   const dispatch = useDispatch();
+  const digitNumber = useSelector((state: any) => state.guesser.digitNumber)
+  const currentBinary = useSelector((state: any) => state.guesser.currentBinary)
 
   const [fontsLoaded] = useFonts({
     VT323_400Regular,
@@ -90,13 +94,10 @@ const Guesser = () => {
     value,
     setValue,
   });
-
-  const [counter, setCounter] = useState(0);
-  const [currentBinary, setCurrentBinary] = useState('0');
-
+  
   // Function to guess the next number
   const guessBinary = (): string => {
-    const next: string = (counter + 1).toString(2);
+    const next: string = (digitNumber + 1).toString(2);
     return next;
   };
 
@@ -106,14 +107,11 @@ const Guesser = () => {
   // Function to check if the input is correct
   const isCorrect = (inputValue: string | null): void => {
     if (inputValue === guessBinary()) {
-      setCounter((prevState: any) => {
-        const prevStateValue = prevState + 1;
-        setCurrentBinary(prevStateValue.toString(2));
-        dispatch(setScoreType('Correct!'));
-        dispatch(setScoreValue(10));
-        Vibration.vibrate(10 * 10);
-        return prevStateValue;
-      });
+      dispatch(setDigitNumber(1));
+      dispatch(setCurrentBinary());
+      dispatch(setScoreType('Correct!'));
+      dispatch(setScoreValue(10));
+      Vibration.vibrate(10 * 10);
     } else {
       dispatch(setScoreType('Try Again!'));
     }
