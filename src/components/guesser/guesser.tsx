@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-filename-extension */
 // eslint-disable-next-line no-use-before-define
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   Text,
@@ -9,29 +9,29 @@ import {
   Button,
   Vibration,
   View,
-} from "react-native";
-import styled from "styled-components/native";
+} from 'react-native';
+import styled from 'styled-components/native';
 import {
   CodeField,
   Cursor,
   useClearByFocusCell,
-} from "react-native-confirmation-code-field";
-import { useDispatch } from "react-redux";
-import { useFonts, VT323_400Regular } from "@expo-google-fonts/vt323";
-import AppLoading from "expo-app-loading";
+} from 'react-native-confirmation-code-field';
+import { useDispatch } from 'react-redux';
+import { useFonts, VT323_400Regular } from '@expo-google-fonts/vt323';
+import AppLoading from 'expo-app-loading';
 import {
   setScoreType,
   setScoreValue,
-} from "../../redux/features/score/scoreSlice";
-import CodeInput from "../code-input/code-input";
-import { Inter_400Regular } from "@expo-google-fonts/inter";
+} from '../../redux/features/score/scoreSlice';
+import CodeInput from '../code-input/code-input';
+import { Inter_400Regular } from '@expo-google-fonts/inter';
 
 const styles = StyleSheet.create({
   root: { padding: 20 },
-  codeFieldRoot: { justifyContent: "center" },
+  codeFieldRoot: { justifyContent: 'center' },
   cell: {},
   focusCell: {
-    borderColor: "#C75B39",
+    borderColor: '#C75B39',
   },
 });
 
@@ -53,8 +53,7 @@ const CellsStyled = styled.Text`
 const GuesserContainer = styled.View`
   width: 330;
   height: 330;
-  background-color: ${(props: { theme: { containersBg: string } }) =>
-    props.theme.containersBg};
+  background-color: ${(props: { theme: { containersBg: string } }) => props.theme.containersBg};
 
   border-radius: 25;
   margin-top: 38;
@@ -62,8 +61,7 @@ const GuesserContainer = styled.View`
 
 const TitleStyled = styled.Text`
   font-size: 36;
-  color: ${(props: { theme: { binaryText: string } }) =>
-    props.theme.binaryText};
+  color: ${(props: { theme: { binaryText: string } }) => props.theme.binaryText};
   font-family: VT323_400Regular;
   margin-left: 26;
   margin-bottom: 12;
@@ -84,7 +82,7 @@ const Guesser = () => {
     Inter_400Regular,
   });
 
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
   //   const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
@@ -92,7 +90,7 @@ const Guesser = () => {
   });
 
   const [counter, setCounter] = useState(0);
-  const [currentBinary, setCurrentBinary] = useState("0");
+  const [currentBinary, setCurrentBinary] = useState('0');
 
   // Function to guess the next number
   const guessBinary = (): string => {
@@ -109,58 +107,67 @@ const Guesser = () => {
       setCounter((prevState: any) => {
         const prevStateValue = prevState + 1;
         setCurrentBinary(prevStateValue.toString(2));
-        dispatch(setScoreType("Correct!"));
+        dispatch(setScoreType('Correct!'));
         dispatch(setScoreValue(10));
         Vibration.vibrate(10 * 10);
         return prevStateValue;
       });
     } else {
-      dispatch(setScoreType("Try Again!"));
+      dispatch(setScoreType('Try Again!'));
     }
   };
 
   // #mixCode
   const onEnterPress = (e: any): void => {
-    if (Platform.OS === "web") {
-      if (e.nativeEvent.key === "Enter") {
+    if (Platform.OS === 'web') {
+      if (e.nativeEvent.key === 'Enter') {
         isCorrect(value);
-        setValue("");
+        setValue('');
       }
       return;
     }
 
-    if (Platform.OS === "android" || Platform.OS === "ios") {
+    if (Platform.OS === 'android' || Platform.OS === 'ios') {
       if (e.nativeEvent.text && e.nativeEvent.target) {
-        setValue("");
+        setValue('');
         isCorrect(value);
       }
     }
   };
 
   return fontsLoaded ? (
+    <>
+    <View style={{
+      justifyContent: 'center',
+      alignContent: 'center',
+      position: 'absolute',
+      transform: Platform.OS === ('android' || 'ios') ? [{translateY: 450}] : [{translateY: 380}],
+      elevation: 30,
+      zIndex: 30
+    }}>
+    <CodeInput />
+    </View>
     <GuesserContainer
       style={{
-        shadowColor: "#86b6ff8f",
+        shadowColor: '#86b6ff8f',
         shadowOffset: {
           width: 0,
           height: 4,
         },
         shadowOpacity: 0.32,
         shadowRadius: 5.46,
-        elevation: 9,
       }}
     >
       <View style={{ marginTop: 36 }}>
         <TitleStyled>Current Digit:</TitleStyled>
-        <View style={{ alignItems: "center" }}>
+        <View style={{ alignItems: 'center' }}>
           <CurrentDigitStyled>{currentBinary}</CurrentDigitStyled>
         </View>
       </View>
       <View>
         <TitleStyled>Next Digit:</TitleStyled>
-        <CodeInput />
       </View>
-    </GuesserContainer>
+    </GuesserContainer></>
   ) : (
     <AppLoading />
   );

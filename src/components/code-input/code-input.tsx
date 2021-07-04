@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     fontSize: 36,
     lineHeight: 51,
     color: '#5EB8FF',
+    elevation: -1,
     zIndex: -1
   },
   buttonsContainer: {
@@ -210,7 +211,9 @@ export default function CodeInput() {
   ): Array<ReactElement> => {
     if (i === c) return cells;
     cells.push(
-      <View>
+      <View
+      key={i}
+      >
         <Animated.Text
           style={[
             styles.cell,
@@ -254,7 +257,7 @@ export default function CodeInput() {
       </View>
       <View style={styles.buttonsContainer}>
         <Pressable
-          style={[styles.buttonMove, { marginRight: 10 }]}
+          style={({pressed}) => [ { marginRight: 10 }, styles.buttonMove]}
           onPress={() => moveThroughCells('left')}
         >
           <Svg
@@ -279,7 +282,7 @@ export default function CodeInput() {
           </Svg>
         </Pressable>
         <Pressable
-          style={[styles.buttonDigit, { marginRight: 7 }]}
+          style={ ({pressed}) => [styles.buttonDigit, { marginRight: 7 }, {backgroundColor: pressed ? '#353535' : '#212121'}]}
           onPress={() => getCodeValue('0')}
         >
           <Text style={styles.buttonDigitText}>0</Text>
@@ -313,11 +316,11 @@ export default function CodeInput() {
           </Svg>
         </Pressable>
         {
-          // <Pressable
-          //         style={styles.buttonDigit}
-          //         onPress={code.length ? deleteCode : null}>
-          //         <Text style={{color: "white"}}>Delete</Text>
-          //       </Pressable>
+          <Pressable
+                  style={styles.buttonDigit}
+                  onPress={code.length ? deleteCode : null}>
+                  <Text style={{color: "white"}}>Delete</Text>
+                </Pressable>
         }
       </View>
     </View>
