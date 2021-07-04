@@ -1,10 +1,8 @@
-import { useColorScheme } from 'react-native'
-
-const isDarkTheme = () => {
-    return true //placeholder
-
-    // const currentScheme = useColorScheme()
-    // return (currentScheme === 'dark') ? true : false
+import { useSelector } from "react-redux" 
+export default function isDarkTheme() { 
+  const themeMode = useSelector(
+    (state: { theme: { themeMode: string } }) => state.theme.themeMode
+    );
+    return themeMode === 'dark'
 }
-
-export default isDarkTheme
+ 
