@@ -1,5 +1,5 @@
 import React from "react" 
-import { StyleSheet, Text, View, Pressable} from "react-native" 
+import { StyleSheet, Text, View, Pressable, ImageBackgroundBase} from "react-native" 
 import colors from "../styles/colors" 
 import styled from "styled-components/native" 
 import { useSelector, useDispatch } from "react-redux" 
@@ -12,22 +12,30 @@ function ButtonsStrip() {
         <Pressable
           style={style.previous_next} 
           onPress={() => { }} >
-          <Text>&lt;</Text>
+          <Text style={style.previous_next_text}>
+            &lt;
+          </Text>
         </Pressable>
         <Pressable
           style={style.zero_one} 
           onPress={() => { }} >
-          <Text>0</Text>
+          <Text style={style.zero_one_text}>
+            0
+          </Text>
         </Pressable>
         <Pressable
           style={style.zero_one} 
           onPress={() => { }} >
-          <Text>1</Text>
+          <Text style={style.zero_one_text}>
+            1
+          </Text>
         </Pressable>
         <Pressable
-          style={style.previous_next} 
+          style={style.previous_next}
           onPress={() => { }} >
-          <Text>&gt;</Text>
+          <Text style={style.previous_next_text}>
+            &gt;
+          </Text>
         </Pressable>
         </View>
     );
@@ -36,25 +44,37 @@ function ButtonsStrip() {
 export default ButtonsStrip
 
 const style = StyleSheet.create({
-  bg: {
-    alignItems: "center",
-    justifyContent: "center",
-    flex: .8,
-    height: 20,
-    margin: 2,
-    flexDirection: "row",
-    textAlign: 'center',
-    shadowColor: colors.ui.bg,
-  },
-  previous_next: {
-    shadowColor: colors.ui.primary
-    
-  },
-  zero_one: {
-    
-  },
+  
   generalShadowSettings: { 
     shadowOffset: { width: 10, height: 0 },
     shadowRadius: 20,
-  }
+  },
+  
+  bg: {
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: 'center',
+    flexDirection: "row",
+    flex: .8,
+    height: 20, 
+    shadowColor: colors.ui.bg,
+  },
+
+  previous_next_text: {
+    color: colors.ui.primary, 
+  },
+  previous_next: {
+    shadowColor: colors.ui.primary,
+    width: 64, height: 64,
+    color: colors.ui.bg_raised_1,
+  },
+  
+  zero_one_text: {
+    color: colors.ui.text,
+    textAlign:"center"
+  },
+  zero_one: {
+    color: colors.ui.primary, 
+  },
+  
 });

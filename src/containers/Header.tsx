@@ -5,6 +5,7 @@ import styled from "styled-components/native";
 import { useSelector, useDispatch } from "react-redux";
 import { setThemeMode } from "../redux/features/theme/themeSlice";
 import Svg, { Path } from 'react-native-svg';
+import theme from '../styles/theme/theme'
 
 const StyledText = styled.Text`
   color: ${(props: { theme: { TextColor: string } }) => props.theme.TextColor};
@@ -52,6 +53,7 @@ const Header = () => {
 
 const styles = StyleSheet.create({
   container: {
+    color:theme.Themes.Light.bruh,
     alignItems: "center",
     justifyContent: "center",
     height: 20,

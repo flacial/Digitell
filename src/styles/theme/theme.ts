@@ -1,4 +1,4 @@
-const DarkTheme = {
+  const DarkTheme = {
     background: "#272727",
     TextColor: "#fff7db",
     statusBarBg: "#5eb9ffad",
