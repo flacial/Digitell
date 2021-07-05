@@ -11,21 +11,10 @@ import {
   View,
 } from 'react-native';
 import styled from 'styled-components/native';
-import {
-  CodeField,
-  Cursor,
-  useClearByFocusCell,
-} from 'react-native-confirmation-code-field';
-import { useDispatch } from 'react-redux';
 import { useFonts, VT323_400Regular } from '@expo-google-fonts/vt323';
 import AppLoading from 'expo-app-loading';
-import {
-  setScoreType,
-  setScoreValue,
-} from '../../redux/features/score/scoreSlice';
 import CodeInput from '../code-input/code-input';
 import { Inter_400Regular } from '@expo-google-fonts/inter';
-import { setCurrentBinary, setDigitNumber } from '../../redux/features/guesser-d/guesserSlice';
 import { useSelector } from 'react-redux';
 
 const styles = StyleSheet.create({
@@ -79,8 +68,6 @@ const CurrentDigitStyled = styled.Text`
 `;
 
 const Guesser = () => {
-  const dispatch = useDispatch();
-  const digitNumber = useSelector((state: any) => state.guesser.digitNumber)
   const currentBinary = useSelector((state: any) => state.guesser.currentBinary)
 
   const [fontsLoaded] = useFonts({
@@ -88,52 +75,6 @@ const Guesser = () => {
     Inter_400Regular,
   });
 
-  const [value, setValue] = useState('');
-  //   const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
-  const [props, getCellOnLayoutHandler] = useClearByFocusCell({
-    value,
-    setValue,
-  });
-  
-  // Function to guess the next number
-  const guessBinary = (): string => {
-    const next: string = (digitNumber + 1).toString(2);
-    return next;
-  };
-
-  // Set the cell count to the next digit length
-  const CELL_COUNT = guessBinary().length;
-
-  // Function to check if the input is correct
-  const isCorrect = (inputValue: string | null): void => {
-    if (inputValue === guessBinary()) {
-      dispatch(setDigitNumber(1));
-      dispatch(setCurrentBinary());
-      dispatch(setScoreType('Correct!'));
-      dispatch(setScoreValue(10));
-      Vibration.vibrate(10 * 10);
-    } else {
-      dispatch(setScoreType('Try Again!'));
-    }
-  };
-
-  // #mixCode
-  const onEnterPress = (e: any): void => {
-    if (Platform.OS === 'web') {
-      if (e.nativeEvent.key === 'Enter') {
-        isCorrect(value);
-        setValue('');
-      }
-      return;
-    }
-
-    if (Platform.OS === 'android' || Platform.OS === 'ios') {
-      if (e.nativeEvent.text && e.nativeEvent.target) {
-        setValue('');
-        isCorrect(value);
-      }
-    }
-  };
 
   return fontsLoaded ? (
     <>

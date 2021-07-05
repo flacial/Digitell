@@ -8,19 +8,29 @@ import {
   Pressable,
   Animated,
   Platform,
+  Vibration,
 } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { useSelector } from "react-redux";
 import {
+  clearCellIndex,
   deleteInputCode,
+  setCellCount,
   setCellIndex,
   setInputCode,
   setInputCodeManually,
 } from "../../redux/features/guesser-d/guesserSlice";
 import { useDispatch } from "react-redux";
-import { unwrapResult } from "@reduxjs/toolkit";
-
-const CELL_COUNT = 6;
+import {
+  setScoreType,
+  setScoreValue,
+} from "../../redux/features/score/scoreSlice";
+import {
+  setCurrentBinary,
+  setDigitNumber,
+} from "../../redux/features/guesser-d/guesserSlice";
+import { useEffect } from "react";
+import Cells from "./components/cells";
 
 const styles = StyleSheet.create({
   focusedCell: {
@@ -84,60 +94,40 @@ const styles = StyleSheet.create({
 });
 
 export default function CodeInput() {
-  const inputCode = useSelector((state: any) => state.guesser.inputCode);
-  const cellIndex = useSelector((state: any) => state.guesser.cellIndex);
+  const inputCode: Array<string> = useSelector((state: any) => state.guesser.inputCode);
+  const cellIndex: number = useSelector((state: any) => state.guesser.cellIndex);
+  const digitNumber: number = useSelector((state: any) => state.guesser.digitNumber);
 
   const dispatch = useDispatch();
-  const generateAnims = (
-    c = CELL_COUNT,
-    b: Array<Animated.Value> = []
-  ): Array<Animated.Value> => {
-    if (b.length === c) {
-      return b;
+
+  // Function to get the next binary
+  const convertNextBinary = (): string => {
+    return (digitNumber + 1).toString(2);
+  };
+
+  const CELL_COUNT: number = useSelector((state: any) => state.guesser.cellCount);
+
+  // Function to check if the input is correct
+  const isInputCorrect = (inputValue: string | null): void => {
+    if (inputValue === convertNextBinary()) {
+      dispatch(setDigitNumber(1));
+      dispatch(setCurrentBinary());
+      dispatch(setScoreType("Correct!"));
+      dispatch(setScoreValue(10));
+      dispatch(setCellCount(1));
+      dispatch(setInputCodeManually([]));
+      dispatch(clearCellIndex());
+      Vibration.vibrate(10 * 10);
+    } else {
+      dispatch(setScoreType("Try Again!"));
     }
-
-    b.push(new Animated.Value(0));
-
-    return generateAnims(c, b);
   };
 
-  const cellsAnims = useState(generateAnims());
-
-  const transformUp = (i: number) => {
-    // Will change transformAnim value to -10 in 0.2 seconds
-    Animated.timing(cellsAnims[0][i], {
-      toValue: -10,
-      duration: 200,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const transformDown = (i: number) => {
-    // Will change transformAnim value to 0 in 0.2 seconds
-    Animated.timing(cellsAnims[0][i], {
-      toValue: 0,
-      duration: 200,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  // const styleFocusedCell = (num = cellIndex, isContainerFocused = true) => {
-  // if (isContainerFocused)
-  //   document.querySelectorAll('.cell').forEach(cell => {
-  //     if (+cell.classList[1] === num) {
-  //       cell.style.border = '2px solid #C75B39';
-  //       cell.style.transform = 'translateY(-10px)';
-  //     } else {
-  //       cell.style.border = '';
-  //       cell.style.transform = '';
-  //     }
-  //   });
-  // else
-  //   document.querySelectorAll('.cell').forEach(cell => {
-  //     cell.style.border = '';
-  //     cell.style.transform = '';
-  //   });
-  // };
+  useEffect(() => {
+    if (inputCode.length === convertNextBinary().length) {
+      isInputCorrect(inputCode.join(""));
+    }
+  }, [inputCode]);
 
   const cellIndexChanger = () => {
     if (cellIndex < CELL_COUNT) {
@@ -156,7 +146,7 @@ export default function CodeInput() {
     }
   };
 
-  const deleteCode = async () => {
+  const deleteCode = () => {
     dispatch(deleteInputCode(inputCode))
       .then((unwrapResult: any) =>
         dispatch(setInputCodeManually(unwrapResult.payload))
@@ -168,10 +158,6 @@ export default function CodeInput() {
       })
       .catch((err: any) => console.log(err));
   };
-
-  // useEffect(() => {
-  //   console.log(cellIndex);
-  // }, [cellIndex]);
 
   const moveThroughCells = (direction: string) => {
     if (direction === "right") {
@@ -187,14 +173,13 @@ export default function CodeInput() {
     } else {
       dispatch(() => {
         if (cellIndex > 0) {
-          dispatch(setCellIndex(-1))
+          dispatch(setCellIndex(-1));
         }
-      }
-
-      );
+      });
     }
   };
 
+  // Recursive Function, Base Case returns the cells, Recursive Case returns the initial parameters
   const cellRoot = (
     c = CELL_COUNT,
     i = 0,
@@ -203,40 +188,13 @@ export default function CodeInput() {
     if (i === c) return cells;
     cells.push(
       <View key={i}>
-        <Animated.Text
-          style={[
-            styles.cell,
-            cellIndex === i ? styles.focusedCell : styles.unfocusedCell,
-            { transform: [{ translateY: cellsAnims[0][i] }] },
-            Platform.OS === "web" && { userSelect: "none" },
-          ]}
-        >
-          {cellIndex === i ? transformUp(i) : transformDown(i)}
-          {inputCode[i] || "_"}
-        </Animated.Text>
+        <Cells
+          i={i}
+        />
       </View>
     );
     return cellRoot(c, i + 1, cells);
   };
-
-  // const handleBlur = e => {
-  //   const currentTarget = e.currentTarget;
-  //   setTimeout(() => {
-  //     if (!currentTarget.contains(document.activeElement)) {
-  //       styleFocusedCell(null, false);
-  //     }
-  //   }, 0);
-  // };
-
-  // const focusFirstCell = () => {
-  //   const firstCell = document.querySelector('.cell');
-  //   firstCell.style.border = '2px solid #C75B39';
-  //   firstCell.style.transform = 'translateY(-10px)';
-  // };
-
-  // useEffect(() => {
-  //   focusFirstCell();
-  // }, []);
 
   return (
     <View style={styles.container}>
