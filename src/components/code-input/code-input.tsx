@@ -94,12 +94,9 @@ const styles = StyleSheet.create({
 });
 
 export default function CodeInput() {
-  const inputCode = useSelector((state: any) => state.guesser.inputCode);
-  const cellIndex = useSelector((state: any) => state.guesser.cellIndex);
-  const digitNumber = useSelector((state: any) => state.guesser.digitNumber);
-  const currentBinary = useSelector(
-    (state: any) => state.guesser.currentBinary
-  );
+  const inputCode: Array<string> = useSelector((state: any) => state.guesser.inputCode);
+  const cellIndex: number = useSelector((state: any) => state.guesser.cellIndex);
+  const digitNumber: number = useSelector((state: any) => state.guesser.digitNumber);
 
   const dispatch = useDispatch();
 
@@ -108,27 +105,11 @@ export default function CodeInput() {
     return (digitNumber + 1).toString(2);
   };
 
-  const CELL_COUNT = useSelector((state: any) => state.guesser.cellCount);
-
-  const generateAnims = (
-    c = CELL_COUNT,
-    b: Array<Animated.Value> = []
-  ): Array<Animated.Value> => {
-    if (b.length === c) {
-      return b;
-    }
-
-    b.push(new Animated.Value(0));
-
-    return generateAnims(c, b);
-  };
-
-  const [cellsAnims, setCellsAnims] = useState(generateAnims());
+  const CELL_COUNT: number = useSelector((state: any) => state.guesser.cellCount);
 
   // Function to check if the input is correct
   const isInputCorrect = (inputValue: string | null): void => {
     if (inputValue === convertNextBinary()) {
-      setCellsAnims(generateAnims());
       dispatch(setDigitNumber(1));
       dispatch(setCurrentBinary());
       dispatch(setScoreType("Correct!"));
@@ -148,50 +129,6 @@ export default function CodeInput() {
     }
   }, [inputCode]);
 
-  const transformUp = (i: number) => {
-    // Will change transformAnim value to -10 in 0.2 seconds
-    if (cellsAnims[i]) {
-      Animated.timing(cellsAnims[i], {
-        toValue: -10,
-        duration: 200,
-        useNativeDriver: true,
-      }).start();
-    }
-  };
-
-  const transformDown = (i: number) => {
-    // Will change transformAnim value to 0 in 0.2 seconds
-    if (cellsAnims[i]) {
-      Animated.timing(cellsAnims[i], {
-        toValue: 0,
-        duration: 200,
-        useNativeDriver: true,
-      }).start();
-    }
-  };
-
-  useEffect(() => {
-    setCellsAnims(generateAnims());
-  }, [CELL_COUNT]);
-
-  // const styleFocusedCell = (num = cellIndex, isContainerFocused = true) => {
-  // if (isContainerFocused)
-  //   document.querySelectorAll('.cell').forEach(cell => {
-  //     if (+cell.classList[1] === num) {
-  //       cell.style.border = '2px solid #C75B39';
-  //       cell.style.transform = 'translateY(-10px)';
-  //     } else {
-  //       cell.style.border = '';
-  //       cell.style.transform = '';
-  //     }
-  //   });
-  // else
-  //   document.querySelectorAll('.cell').forEach(cell => {
-  //     cell.style.border = '';
-  //     cell.style.transform = '';
-  //   });
-  // };
-
   const cellIndexChanger = () => {
     if (cellIndex < CELL_COUNT) {
       dispatch(setCellIndex(1));
@@ -209,7 +146,7 @@ export default function CodeInput() {
     }
   };
 
-  const deleteCode = async () => {
+  const deleteCode = () => {
     dispatch(deleteInputCode(inputCode))
       .then((unwrapResult: any) =>
         dispatch(setInputCodeManually(unwrapResult.payload))
@@ -242,6 +179,7 @@ export default function CodeInput() {
     }
   };
 
+  // Recursive Function, Base Case returns the cells, Recursive Case returns the initial parameters
   const cellRoot = (
     c = CELL_COUNT,
     i = 0,
@@ -251,36 +189,12 @@ export default function CodeInput() {
     cells.push(
       <View key={i}>
         <Cells
-          cellIndex={cellIndex}
-          inputCode={inputCode}
           i={i}
-          cellsAnims={cellsAnims}
-          transformUp={transformUp}
-          transformDown={transformDown}
         />
       </View>
     );
     return cellRoot(c, i + 1, cells);
   };
-
-  // const handleBlur = e => {
-  //   const currentTarget = e.currentTarget;
-  //   setTimeout(() => {
-  //     if (!currentTarget.contains(document.activeElement)) {
-  //       styleFocusedCell(null, false);
-  //     }
-  //   }, 0);
-  // };
-
-  // const focusFirstCell = () => {
-  //   const firstCell = document.querySelector('.cell');
-  //   firstCell.style.border = '2px solid #C75B39';
-  //   firstCell.style.transform = 'translateY(-10px)';
-  // };
-
-  // useEffect(() => {
-  //   focusFirstCell();
-  // }, []);
 
   return (
     <View style={styles.container}>
