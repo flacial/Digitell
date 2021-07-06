@@ -1,43 +1,69 @@
 import React from "react" 
-import { StyleSheet, Text, View, Pressable, ImageBackgroundBase} from "react-native" 
-import colors from "../styles/colors" 
-import styled from "styled-components/native" 
-import { useSelector, useDispatch } from "react-redux" 
-import { setThemeMode } from "../redux/features/theme/themeSlice"
-import Svg, { Path } from 'react-native-svg'
+import { StyleSheet, Text, View, Pressable, TouchableOpacity} from "react-native" 
+import colors from "../styles/colors"  
 
-function ButtonsStrip() {
+function zero_Click() {
+
+}
+
+function one_Click() {
+  
+}
+
+function previous_Click() {
+  
+}
+
+function next_Click() {
+  
+}
+
+const ButtonsStrip = () => {
     return (
-      <View style={{ flex:1, flexDirection:"row" }}>
+      <View style={{ flex: 1, flexDirection: "row" }}>
+        
         <Pressable
           style={style.previous_next} 
-          onPress={() => { }} >
+          onPress={previous_Click} >
+          
           <Text style={style.previous_next_text}>
             &lt;
           </Text>
+
         </Pressable>
+
         <Pressable
-          style={style.zero_one} 
-          onPress={() => { }} >
+          onPress={zero_Click}
+          style={style.zero_one} >
+          
           <Text style={style.zero_one_text}>
             0
           </Text>
-        </Pressable>
+
+        </Pressable> 
+        
         <Pressable
-          style={style.zero_one} 
-          onPress={() => { }} >
+          onPress={one_Click}
+          style={style.zero_one} >
+
           <Text style={style.zero_one_text}>
             1
           </Text>
+
         </Pressable>
+        
+        
         <Pressable
-          style={style.previous_next}
-          onPress={() => { }} >
-          <Text style={style.previous_next_text}>
+          onPress={next_Click}
+          style={style.previous_next} > 
+          
+          <Text style={style.previous_next_text} >
             &gt;
           </Text>
+
         </Pressable>
-        </View>
+        
+      </View>
     );
 }
 
@@ -47,7 +73,10 @@ const style = StyleSheet.create({
   
   generalShadowSettings: { 
     shadowOffset: { width: 10, height: 0 },
-    shadowRadius: 20,
+    shadowRadius: 20, 
+    justifyContent: 'center',
+    alignItems: 'center', 
+    borderRadius: 100,
   },
   
   bg: {
@@ -57,7 +86,7 @@ const style = StyleSheet.create({
     flexDirection: "row",
     flex: .8,
     height: 20, 
-    shadowColor: colors.ui.bg,
+    backgroundColor: colors.ui.bg,
   },
 
   previous_next_text: {
@@ -74,7 +103,8 @@ const style = StyleSheet.create({
     textAlign:"center"
   },
   zero_one: {
-    color: colors.ui.primary, 
+    width: 100, height: 100,
+    backgroundColor: colors.ui.primary,
   },
   
 });
