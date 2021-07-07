@@ -25,7 +25,7 @@ const Cwrapper = (props: {
         backgroundColor={currentThemeStyles.statusBarBg}
         hideTransitionAnimation={"slide"}
         hidden={false}
-        translucent={true}
+        translucent={false}
       />
       <View
         style={{
