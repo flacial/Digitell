@@ -221,10 +221,10 @@ export default function CodeInput() {
             <Path
               d="M12.75 2.75L2.25 11L12.75 19.25"
               stroke="white"
-              stroke-opacity="0.87"
-              stroke-width="4"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeOpacity="0.87"
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </Svg>
         </Pressable>
@@ -272,10 +272,10 @@ export default function CodeInput() {
             <Path
               d="M2.25 19.25L12.75 11L2.25 2.75"
               stroke="white"
-              stroke-opacity="0.87"
-              stroke-width="4"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeOpacity="0.87"
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </Svg>
         </Pressable>

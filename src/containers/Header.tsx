@@ -53,7 +53,7 @@ const Header = () => {
 
 const styles = StyleSheet.create({
   container: {
-    color:theme.Themes.Light.bruh,
+    // color:theme.Themes.Light.bruh,
     alignItems: "center",
     justifyContent: "center",
     height: 20,
