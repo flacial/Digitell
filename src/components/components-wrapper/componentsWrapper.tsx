@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { ImageBackground, Platform, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import Themes from '../../styles/theme/theme'
+import BlackLayer from '../black-layer/black-layer';
 
 const Cwrapper = (props: {
   children:
@@ -16,6 +17,7 @@ const Cwrapper = (props: {
 }) => {
   const theme = useSelector((state: any) => state.theme.themeMode);
   const currentThemeStyles = Themes[theme];
+  const isSettingsRendered = useSelector((state: {misc: {isSettingsRendered: boolean}}) => state.misc.isSettingsRendered)
 
   return (
     <ThemeProvider theme={currentThemeStyles}>
@@ -53,12 +55,12 @@ const Cwrapper = (props: {
             height: "100%",
             opacity: currentThemeStyles.appBgOpacity,
             position: "absolute",
+            zIndex: -30
           }}
         ></ImageBackground>
         <View
           style={{
             alignItems: "center",
-            // justifyContent: "center",
             display: "flex",
             width: "100%",
             height: "100%",
@@ -68,6 +70,11 @@ const Cwrapper = (props: {
           {props.children}
         </View>
       </View>
+      {
+        // isSettingsRendered ? 
+        // <BlackLayer /> :
+        // null
+      }
     </ThemeProvider>
   );
 };

@@ -97,6 +97,7 @@ const Guesser = () => {
         },
         shadowOpacity: 0.32,
         shadowRadius: 5.46,
+        zIndex: -1
       }}
     >
       <View style={{ marginTop: 36 }}>
