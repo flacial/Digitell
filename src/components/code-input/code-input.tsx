@@ -31,72 +31,18 @@ import {
 } from "../../redux/features/guesser-d/guesserSlice";
 import { useEffect } from "react";
 import Cells from "./components/cells";
-
-const styles = StyleSheet.create({
-  focusedCell: {
-    borderColor: "#C75B39",
-    borderWidth: Platform.OS === "web" ? 3 : 2,
-  },
-  unfocusedCell: {
-    borderWidth: 0,
-  },
-  cell: {
-    backgroundColor: "#212121",
-    borderRadius: 8,
-    color: "white",
-    fontSize: 30,
-    width: 30,
-    height: 50,
-    display: "flex",
-    marginBottom: 20,
-    marginLeft: 20,
-    textAlign: "center",
-    justifyContent: "center",
-    alignItems: "center",
-    lineHeight: 50,
-  },
-  container: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonMove: {
-    width: 48,
-    height: 48,
-    backgroundColor: "#212121",
-    borderRadius: 100,
-    textAlign: "center",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  buttonDigit: {
-    width: 64,
-    height: 64,
-    backgroundColor: "#212121",
-    borderRadius: 100,
-    textAlign: "center",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  buttonDigitText: {
-    width: 23,
-    height: 51,
-    fontStyle: "normal",
-    fontWeight: "normal",
-    fontSize: 36,
-    lineHeight: 51,
-    color: "#5EB8FF",
-  },
-  buttonsContainer: {
-    flexDirection: "row",
-    marginTop: 20,
-    alignItems: "center",
-  },
-});
+import { WhichOS, setCursorWeb } from "../../utils/basedMethods.ts";
 
 export default function CodeInput() {
-  const inputCode: Array<string> = useSelector((state: any) => state.guesser.inputCode);
-  const cellIndex: number = useSelector((state: any) => state.guesser.cellIndex);
-  const digitNumber: number = useSelector((state: any) => state.guesser.digitNumber);
+  const inputCode: Array<string> = useSelector(
+    (state: any) => state.guesser.inputCode
+  );
+  const cellIndex: number = useSelector(
+    (state: any) => state.guesser.cellIndex
+  );
+  const digitNumber: number = useSelector(
+    (state: any) => state.guesser.digitNumber
+  );
 
   const dispatch = useDispatch();
 
@@ -105,7 +51,9 @@ export default function CodeInput() {
     return (digitNumber + 1).toString(2);
   };
 
-  const CELL_COUNT: number = useSelector((state: any) => state.guesser.cellCount);
+  const CELL_COUNT: number = useSelector(
+    (state: any) => state.guesser.cellCount
+  );
 
   // Function to check if the input is correct
   const isInputCorrect = (inputValue: string | null): void => {
@@ -188,9 +136,7 @@ export default function CodeInput() {
     if (i === c) return cells;
     cells.push(
       <View key={i}>
-        <Cells
-          i={i}
-        />
+        <Cells i={i} />
       </View>
     );
     return cellRoot(c, i + 1, cells);
@@ -203,7 +149,7 @@ export default function CodeInput() {
       </View>
       <View style={styles.buttonsContainer}>
         <Pressable
-          style={({ pressed }) => [{ marginRight: 10 }, styles.buttonMove]}
+          style={({ pressed }) => [{ marginRight: 10, ...setCursorWeb() }, styles.buttonMove]}
           onPress={() => moveThroughCells("left")}
         >
           <Svg
@@ -216,7 +162,10 @@ export default function CodeInput() {
             strokeOpacity="0.87"
             strokeLinecap="round"
             strokeLinejoin="round"
-            style={Platform.OS === "web" && { userSelect: "none" }}
+            style={[
+              Platform.OS === "web" && { userSelect: "none" },
+              { left: 15, position: "absolute" },
+            ]}
           >
             <Path
               d="M12.75 2.75L2.25 11L12.75 19.25"
@@ -254,7 +203,20 @@ export default function CodeInput() {
           <Text style={styles.buttonDigitText}>1</Text>
         </Pressable>
         <Pressable
-          style={[styles.buttonMove, { marginLeft: 10 }]}
+          style={[styles.buttonDigit, { marginLeft: 7 }, setCursorWeb()]}
+          onPress={inputCode.length ? deleteCode : null}
+        >
+          <Text
+            style={[
+              { color: "white" },
+              WhichOS.isLargeScreenOS() ? { userSelect: "none" } : null,
+            ]}
+          >
+            Delete
+          </Text>
+        </Pressable>
+        <Pressable
+          style={[styles.buttonMove, { marginLeft: 10, ...setCursorWeb() }]}
           onPress={() => moveThroughCells("right")}
         >
           <Svg
@@ -279,22 +241,68 @@ export default function CodeInput() {
             />
           </Svg>
         </Pressable>
-        {
-          <Pressable
-            style={styles.buttonDigit}
-            onPress={inputCode.length ? deleteCode : null}
-          >
-            <Text
-              style={[
-                { color: "white" },
-                Platform.OS === "web" ? { userSelect: "none" } : null,
-              ]}
-            >
-              Delete
-            </Text>
-          </Pressable>
-        }
       </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  focusedCell: {
+    borderColor: "#C75B39",
+    borderWidth: Platform.OS === "web" ? 3 : 2,
+  },
+  unfocusedCell: {
+    borderWidth: 0,
+  },
+  cell: {
+    backgroundColor: "#212121",
+    borderRadius: 8,
+    color: "white",
+    fontSize: 30,
+    width: 30,
+    height: 50,
+    display: "flex",
+    marginBottom: 20,
+    marginLeft: 20,
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    lineHeight: 50,
+  },
+  container: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonMove: {
+    width: 48,
+    height: 48,
+    backgroundColor: "#212121",
+    borderRadius: 100,
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonDigit: {
+    width: 64,
+    height: 64,
+    backgroundColor: "#212121",
+    borderRadius: 100,
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonDigitText: {
+    width: 23,
+    height: 51,
+    fontStyle: "normal",
+    fontWeight: "normal",
+    fontSize: 36,
+    lineHeight: 51,
+    color: "#5EB8FF",
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+    marginTop: 20,
+    alignItems: "center",
+  },
+});

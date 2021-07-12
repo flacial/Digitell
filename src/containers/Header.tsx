@@ -19,7 +19,6 @@ import { setIsSettingsRendered } from "../redux/features/misc/miscSilce";
 const StyledText = styled.Text`
   color: ${(props: { theme: { TextColor: string } }) => props.theme.TextColor};
   font-size: 36;
-  margin-right: 160;
 `;
 
 const Header = () => {
@@ -35,7 +34,7 @@ const Header = () => {
 
   return (
     <View style={{width: '100%'}}>
-      <Settings/>
+      {/* <Settings/> */}
       <View
         style={{
           position: "relative",
