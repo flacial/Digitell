@@ -10,16 +10,18 @@ export const deleteInputCode = createAsyncThunk(
   }
 );
 
-const INITIAL_CELL_COUNT = 0
+// const INITIAL_CELL_COUNT = 0;
+const RandomNumber = Math.floor(Math.random() * 20);
+const isInt = RandomNumber === 0 ? 1 : RandomNumber;
 
 export const guesserSlice = createSlice({
   name: "guesserD",
   initialState: {
-    currentBinary: "0",
-    digitNumber: INITIAL_CELL_COUNT,
+    currentBinary: isInt.toString(2),
+    digitNumber: isInt,
     inputCode: [],
     cellIndex: 0,
-    cellCount: (INITIAL_CELL_COUNT + 1).toString(2).length
+    cellCount: (isInt + 1).toString(2).length,
   },
   reducers: {
     setInputCode: (state, action) => {
@@ -28,20 +30,29 @@ export const guesserSlice = createSlice({
     setCellIndex: (state, action) => {
       state.cellIndex += action.payload;
     },
-    setDigitNumber: (state, {payload}) => {
-      state.digitNumber += payload
+    setDigitNumber: (state, { payload }) => {
+      const randomUnique = (range, count) => {
+        let nums = new Set();
+        while (nums.size < count) {
+          nums.add(Math.floor(Math.random() * (range - 1 + 1) + 1));
+        }
+        return [...nums];
+      };
+
+      state.digitNumber = randomUnique(20, 1)[0];
     },
     setCurrentBinary: (state) => {
-      state.currentBinary = (state.digitNumber).toString(2);
+      state.currentBinary = state.digitNumber.toString(2);
     },
     setInputCodeManually: (state, { payload }) => {
       state.inputCode = payload;
     },
-    setCellCount: (state, {payload}) => {
-      state.cellCount = (state.digitNumber + 1).toString(2).length
-    }, clearCellIndex: (state) => {
-      state.cellIndex = 0
-    }
+    setCellCount: (state, { payload }) => {
+      state.cellCount = (state.digitNumber + 1).toString(2).length;
+    },
+    clearCellIndex: (state) => {
+      state.cellIndex = 0;
+    },
   },
 });
 
@@ -53,7 +64,7 @@ export const {
   setCurrentBinary,
   setInputCodeManually,
   setCellCount,
-  clearCellIndex
+  clearCellIndex,
 } = guesserSlice.actions;
 
 export default guesserSlice.reducer;
