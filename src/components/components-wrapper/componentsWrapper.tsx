@@ -6,6 +6,7 @@ import { StatusBar } from "expo-status-bar";
 import Themes from "../../styles/theme/theme";
 import BlackLayer from "../black-layer/black-layer";
 import { WhichOS } from "../../utils/basedMethods";
+import BackgroundImage from "../background-image/background-image.tsx";
 
 const Cwrapper = (props: {
   children:
@@ -18,7 +19,6 @@ const Cwrapper = (props: {
 }) => {
   const theme = useSelector((state: any) => state.theme.themeMode);
   const currentThemeStyles = Themes[theme];
-  // const isSettingsRendered = useSelector((state: {misc: {isSettingsRendered: boolean}}) => state.misc.isSettingsRendered)
 
   return (
     <ThemeProvider theme={currentThemeStyles}>
@@ -52,31 +52,17 @@ const Cwrapper = (props: {
             height: "100%",
           }}
         >
-          <ImageBackground
-            source={
-              Platform.OS === "web" || "windows" || "macos"
-                ? theme === "light"
-                  ? require("../../assets/images/lightThemeBg.png")
-                  : require("../../assets/images/darkThemeBg-laptop.png")
-                : theme === "light"
-                ? require("../../assets/images/lightThemeBg.png")
-                : require("../../assets/images/darkThemeBg.png")
-            }
-            style={{
-              width: "100%",
-              height: "100%",
-              opacity: currentThemeStyles.appBgOpacity,
-              position: "absolute",
-              zIndex: -30,
-            }}
-          ></ImageBackground>
+
+        <BackgroundImage />
+
           <View
             style={{
               alignItems: "center",
               display: "flex",
               width: "100%",
               height: "100%",
-              paddingTop: 70,
+              // paddingTop: WhichOS.isMobile() ? 70 : 20,
+              justifyContent: 'center'
             }}
           >
             {props.children}

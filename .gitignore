@@ -1,2 +1,10 @@
 /node_modules 
 /.*
+
+# @generated: @expo/electron-adapter@0.0.55
+/.expo/*
+# Expo Web
+/web-build/*
+# electron-webpack
+/dist
+# @end @expo/electron-adapter

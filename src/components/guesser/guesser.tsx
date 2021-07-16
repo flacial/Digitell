@@ -82,7 +82,7 @@ const Guesser = () => {
       justifyContent: 'center',
       alignContent: 'center',
       position: 'absolute',
-      transform: Platform.OS === ('android' || 'ios') ? [{translateY: 450}] : [{translateY: 380}],
+      transform: Platform.OS === ('android' || 'ios') ? [{translateY: 205}] : [{translateY: 205}],
       elevation: 30,
       zIndex: 30
     }}>

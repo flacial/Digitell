@@ -39,6 +39,24 @@ export const guesserSlice = createSlice({
         return [...nums];
       };
 
+      // A function that takes in a number argument called x
+      // Generate a random array of numbers from 1 to 100
+      // Return one number from the array that isn't equal to x
+
+      // const process = (x) => {
+      //   const arr = [];
+      //   for (var i = 1; i <= 5; i++) {
+      //     arr.push(i);
+      //   }
+      //   let rand = Math.floor(Math.random() * arr.length);
+      //   while (arr[rand] === x) {
+      //     rand = Math.floor(Math.random() * arr.length);
+      //   }
+      //   return arr[rand];
+      // };
+
+      // console.log(process(5));
+
       state.digitNumber = randomUnique(20, 1)[0];
     },
     setCurrentBinary: (state) => {
