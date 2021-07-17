@@ -1,12 +1,11 @@
 /* eslint-disable react/jsx-filename-extension */
 // eslint-disable-next-line no-use-before-define
-import React, { useState, ReactElement } from "react";
+import React, { ReactElement } from "react";
 import {
   View,
   Text,
   StyleSheet,
   Pressable,
-  Animated,
   Platform,
   Vibration,
 } from "react-native";
@@ -55,6 +54,11 @@ export default function CodeInput() {
     (state: any) => state.guesser.cellCount
   );
 
+  const vibrationEnabled: boolean = useSelector(
+    (state: { misc: { vibrationEnabled: boolean } }) =>
+      state.misc.vibrationEnabled
+  );
+
   // Function to check if the input is correct
   const isInputCorrect = (inputValue: string | null): void => {
     if (inputValue === convertNextBinary()) {
@@ -65,7 +69,9 @@ export default function CodeInput() {
       dispatch(setCellCount(1));
       dispatch(setInputCodeManually([]));
       dispatch(clearCellIndex());
-      Vibration.vibrate(10 * 10);
+      if (vibrationEnabled) {
+        Vibration.vibrate(10 * 10);
+      }
     } else {
       dispatch(setScoreType("Try Again!"));
     }
@@ -149,7 +155,10 @@ export default function CodeInput() {
       </View>
       <View style={styles.buttonsContainer}>
         <Pressable
-          style={({ pressed }) => [{ marginRight: 10, ...setCursorWeb() }, styles.buttonMove]}
+          style={({ pressed }) => [
+            { marginRight: 10, ...setCursorWeb() },
+            styles.buttonMove,
+          ]}
           onPress={() => moveThroughCells("left")}
         >
           <Svg
@@ -202,7 +211,7 @@ export default function CodeInput() {
         >
           <Text style={styles.buttonDigitText}>1</Text>
         </Pressable>
-        <Pressable
+        {/* <Pressable
           style={[styles.buttonDigit, { marginLeft: 7 }, setCursorWeb()]}
           onPress={inputCode.length ? deleteCode : null}
         >
@@ -214,7 +223,7 @@ export default function CodeInput() {
           >
             Delete
           </Text>
-        </Pressable>
+        </Pressable> */}
         <Pressable
           style={[styles.buttonMove, { marginLeft: 10, ...setCursorWeb() }]}
           onPress={() => moveThroughCells("right")}
