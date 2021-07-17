@@ -16,6 +16,8 @@ import AppLoading from 'expo-app-loading';
 import CodeInput from '../code-input/code-input';
 import { Inter_400Regular } from '@expo-google-fonts/inter';
 import { useSelector } from 'react-redux';
+import { setIsGuesserLoaded } from '../../redux/features/misc/miscSilce';
+import { useDispatch } from 'react-redux';
 
 const styles = StyleSheet.create({
   root: { padding: 20 },
@@ -70,6 +72,8 @@ const CurrentDigitStyled = styled.Text`
 const Guesser = () => {
   const currentBinary = useSelector((state: any) => state.guesser.currentBinary)
 
+  const dispatch = useDispatch()
+
   const [fontsLoaded] = useFonts({
     VT323_400Regular,
     Inter_400Regular,
@@ -88,7 +92,7 @@ const Guesser = () => {
     }}>
     <CodeInput />
     </View>
-    <GuesserContainer
+    <GuesserContainer onLayout={() => {dispatch(setIsGuesserLoaded(true))}}
       style={{
         shadowColor: '#86b6ff8f',
         shadowOffset: {

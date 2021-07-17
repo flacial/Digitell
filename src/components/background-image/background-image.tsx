@@ -1,14 +1,18 @@
 import React from 'react'
 import { ImageBackground, Platform } from 'react-native'
 import { useSelector } from 'react-redux'
+import { setIsBackgroundLoaded } from '../../redux/features/misc/miscSilce';
 import Themes from "../../styles/theme/theme";
+import { useDispatch } from 'react-redux';
 
 const BackgroundImage = () => {
   const theme = useSelector((state: any) => state.theme.themeMode);
   const currentThemeStyles = Themes[theme];
 
+  const dispatch = useDispatch()
+
   return (
-    <ImageBackground
+    <ImageBackground onLoad={() => {dispatch(setIsBackgroundLoaded(true))}}
     source={
       Platform.OS === "web" || "windows" || "macos"
         ? theme === "light"

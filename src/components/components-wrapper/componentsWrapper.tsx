@@ -1,12 +1,13 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components/native";
 import { useSelector } from "react-redux";
-import { ImageBackground, Platform, View } from "react-native";
+import { Platform, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import Themes from "../../styles/theme/theme";
 import BlackLayer from "../black-layer/black-layer";
 import { WhichOS } from "../../utils/basedMethods";
 import BackgroundImage from "../background-image/background-image.tsx";
+import AnimatedSplashC from "../animated-splash/animated-splash";
 
 const Cwrapper = (props: {
   children:
@@ -19,6 +20,16 @@ const Cwrapper = (props: {
 }) => {
   const theme = useSelector((state: any) => state.theme.themeMode);
   const currentThemeStyles = Themes[theme];
+
+  const backgroundLoaded = useSelector(
+    (state: { misc: { backgroundLoaded: boolean } }) =>
+      state.misc.backgroundLoaded
+  );
+
+  const guesserLoaded = useSelector(
+    (state: { misc: { guesserLoaded: boolean } }) =>
+      state.misc.guesserLoaded
+  );
 
   return (
     <ThemeProvider theme={currentThemeStyles}>
@@ -52,9 +63,12 @@ const Cwrapper = (props: {
             height: "100%",
           }}
         >
-
-        <BackgroundImage />
-
+          {
+          Platform.OS === "web" ? (
+            guesserLoaded && backgroundLoaded ? null : <AnimatedSplashC />
+          ) : null
+          }
+          <BackgroundImage />
           <View
             style={{
               alignItems: "center",
@@ -62,7 +76,7 @@ const Cwrapper = (props: {
               width: "100%",
               height: "100%",
               // paddingTop: WhichOS.isMobile() ? 70 : 20,
-              justifyContent: 'center'
+              justifyContent: "center",
             }}
           >
             {props.children}
