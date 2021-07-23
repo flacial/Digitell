@@ -25,6 +25,7 @@
         "foregroundImage": "./src/assets/images/ic_launcher_foreground.png",
         "backgroundColor": "#3c8cc4"
       },
+      "googleServicesFile": "./google-services.json",
       "package": "digitell.com.game"
     },
     "web": {

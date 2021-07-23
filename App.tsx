@@ -5,15 +5,51 @@ import store from "./src/redux/store";
 import { Provider } from "react-redux";
 import Cwrapper from "./src/components/components-wrapper/componentsWrapper";
 import Scores from "./src/components/scores/scores";
+import { registerForPushNotificationAsync } from "./src/utils/registerForPushNotificationsAsync";
+import * as Notifications from "expo-notifications"
+import { View, Text } from 'react-native'
 
-const App = () => (
-  <Provider store={store}>
-    <Cwrapper>
-      <Header />
-      <Scores />
-      <Guesser />
-    </Cwrapper>
-  </Provider>
-);
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false
+  })
+})
+
+const App = () => {
+  const [expoPushToken, setExpoPushToken] = React.useState("");
+  const [notification, setNotification] = React.useState(false)
+  const notificationsListener = React.useRef({})
+  const responseListener = React.useRef({})
+
+
+  React.useEffect(() => {
+    registerForPushNotificationAsync().then(token => setExpoPushToken(token)).catch(console.log)
+    notificationsListener.current = Notifications.addNotificationReceivedListener((notification: any) => setNotification(notification))
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => console.log(response))
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationsListener.current)
+      Notifications.removeNotificationSubscription(responseListener.current)
+    }
+  }, [])
+
+  return (
+    <Provider store={store}>
+      <Text>Your expo push token: {expoPushToken}</Text>
+      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Title: {notification && notification.request.content.title} </Text>
+        <Text>Body: {notification && notification.request.content.body}</Text>
+        <Text>Data: {notification && JSON.stringify(notification.request.content.data)}</Text>
+      </View>
+      <Cwrapper>
+        <Header />
+        <Scores />
+        <Guesser />
+      </Cwrapper>
+    </Provider>
+  );
+};
 
 export default App;
