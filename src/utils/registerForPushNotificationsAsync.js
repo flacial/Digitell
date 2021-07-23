@@ -4,7 +4,10 @@ import { Platform } from 'react-native';
 
 export const registerForPushNotificationAsync = async () => {
     let token;
+
+    // Check if the device is physical or an emulator
     if (Constants.isDevice) {
+      // Notifications permission status
       const { status: existingStatus } =
         await Notifications.getPermissionsAsync();
       let finalStatus = existingStatus;
@@ -25,6 +28,7 @@ export const registerForPushNotificationAsync = async () => {
       return;
     }
 
+    // Android require to set a channel to receive/send notifications
     if (Platform.OS === "android") {
       Notifications.setNotificationChannelAsync('default', {
         name: 'default',
@@ -33,6 +37,7 @@ export const registerForPushNotificationAsync = async () => {
         lightColor: '#FF231F7C'
       })
     }
+
     console.log(token)
     return token
   };

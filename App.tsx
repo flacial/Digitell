@@ -9,6 +9,7 @@ import { registerForPushNotificationAsync } from "./src/utils/registerForPushNot
 import * as Notifications from "expo-notifications"
 import { View, Text } from 'react-native'
 
+// How to handle notifications when the app is foregrounded
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -25,11 +26,17 @@ const App = () => {
 
 
   React.useEffect(() => {
+    // Get Expo Push Token
     registerForPushNotificationAsync().then(token => setExpoPushToken(token)).catch(console.log)
+
+    // Listen to the received notifications and update the state.
     notificationsListener.current = Notifications.addNotificationReceivedListener((notification: any) => setNotification(notification))
+
+    // Listen to user interactions with the notification
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => console.log(response))
 
     return () => {
+      // Remove the listeners
       Notifications.removeNotificationSubscription(notificationsListener.current)
       Notifications.removeNotificationSubscription(responseListener.current)
     }
