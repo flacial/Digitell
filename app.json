@@ -4,12 +4,46 @@
     "slug": "Digitell",
     "version": "0.5.0",
     "orientation": "portrait",
-    "icon": "./src/assets/images/icon2.png",
+    "icon": "./src/assets/images/res/drawable-xxxhdpi/ic_stat_0.png",
     "splash": {
       "image": "./src/assets/images/splash2.png",
       "resizeMode": "contain",
       "backgroundColor": "#fff"
     },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./src/assets/images/res/drawable-xxxhdpi/ic_stat_bolt.png",
+          "color": "#000000",
+        }
+      ]
+    ],
+      "notification": {
+    /*
+      Local path or remote url to an image to use as the icon for push notifications.
+      96x96 png grayscale with transparency.
+    */
+    "icon": "./src/assets/images/res/drawable-xxxhdpi/ic_stat_bolt.png",
+
+    /*
+      Tint color for the push notification image when it appears in the notification tray.
+      6 character long hex color string eg: "#000000"
+    */
+    "color": "#000000",
+
+    /*
+      Show each push notification individually "default" or collapse into one "collapse".
+      Valid values: "default", "collapse"
+    */
+    "androidMode": "default",
+
+    /*
+      If "androidMode" is set to "collapse", this title is used for the collapsed notification message.
+      eg: "#{unread_notifications} new interactions"
+    */
+    "androidCollapsedTitle": "Balls on the court"
+  },
     "updates": {
       "fallbackToCacheTimeout": 0
     },

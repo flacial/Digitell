@@ -50,8 +50,6 @@
     <false/>
     <key>NSMicrophoneUsageDescription</key>
     <string>Allow $(PRODUCT_NAME) to access your microphone</string>
-    <key>UIUserInterfaceStyle</key>
-    <string>Light</string>
     <key>CFBundleURLTypes</key>
     <array>
       <dict>
@@ -63,6 +61,8 @@
     </array>
     <key>UIRequiresFullScreen</key>
     <true/>
+    <key>UIUserInterfaceStyle</key>
+    <string>Light</string>
     <key>CFBundleDisplayName</key>
     <string>Digitell</string>
   </dict>
