@@ -14,36 +14,14 @@
       [
         "expo-notifications",
         {
-          "icon": "./src/assets/images/res/drawable-xxxhdpi/ic_stat_bolt.png",
-          "color": "#000000",
+          "icon": "./assets/notification_icon.png",
+          "color": "#ffffff"
         }
       ]
     ],
-      "notification": {
-    /*
-      Local path or remote url to an image to use as the icon for push notifications.
-      96x96 png grayscale with transparency.
-    */
-    "icon": "./src/assets/images/res/drawable-xxxhdpi/ic_stat_bolt.png",
-
-    /*
-      Tint color for the push notification image when it appears in the notification tray.
-      6 character long hex color string eg: "#000000"
-    */
-    "color": "#000000",
-
-    /*
-      Show each push notification individually "default" or collapse into one "collapse".
-      Valid values: "default", "collapse"
-    */
-    "androidMode": "default",
-
-    /*
-      If "androidMode" is set to "collapse", this title is used for the collapsed notification message.
-      eg: "#{unread_notifications} new interactions"
-    */
-    "androidCollapsedTitle": "Balls on the court"
-  },
+    "notification": {
+      "icon": "./assets/notification_icon.png"
+    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
