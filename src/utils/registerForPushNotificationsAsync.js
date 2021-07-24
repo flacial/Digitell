@@ -42,6 +42,18 @@ export const registerForPushNotificationsAsync = async () => {
       })
     }
 
+    // Schedule a notification every 5 seconds
+
+    // Notifications.scheduleNotificationAsync({
+    //   content: {
+    //     title: 'Remember to drink water!',
+    //   },
+    //   trigger: {
+    //     seconds: 5,
+    //     repeats: true,
+    //   },
+    // });
+
     console.log(token)
     return token
   };
