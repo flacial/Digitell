@@ -1,4 +1,4 @@
-# Digitell
+# Digitell [React Native Playground]
 A random binary guessing game that runs on Web, Mobile, and soon, Desktop.
 
 ### Checklist
