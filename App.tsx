@@ -7,7 +7,7 @@ import Cwrapper from "./src/components/components-wrapper/componentsWrapper";
 import Scores from "./src/components/scores/scores";
 import { registerForPushNotificationsAsync } from "./src/utils/registerForPushNotificationsAsync";
 import * as Notifications from "expo-notifications";
-import { View, Text } from "react-native";
+import { View, Text, Platform } from "react-native";
 import NotificationsExp from "./src/components/experimental/notificationsExp";
 
 // Handling notifications when the app is foregrounded
@@ -26,30 +26,32 @@ const App = () => {
   const responseListener = React.useRef<any>();
 
   React.useEffect(() => {
-    // Get Expo Push Token
-    registerForPushNotificationsAsync().then((token: any) =>
-      setExpoPushToken(token)
-    );
-
-    // Listen to the received notifications and update the state.
-    notificationsListener.current =
-      Notifications.addNotificationReceivedListener((notification: any) =>
-        setNotification(notification)
+    if (Platform.OS != "web") {
+      // Get Expo Push Token
+      registerForPushNotificationsAsync().then((token: any) =>
+        setExpoPushToken(token)
       );
 
-    // Listen to user interactions with the notification
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) =>
-        console.log(response)
-      );
+      // Listen to the received notifications and update the state.
+      notificationsListener.current =
+        Notifications.addNotificationReceivedListener((notification: any) =>
+          setNotification(notification)
+        );
 
-    return () => {
-      // Remove the listeners
-      Notifications.removeNotificationSubscription(
-        notificationsListener.current
-      );
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
+      // Listen to user interactions with the notification
+      responseListener.current =
+        Notifications.addNotificationResponseReceivedListener((response) =>
+          console.log(response)
+        );
+
+      return () => {
+        // Remove the listeners
+        Notifications.removeNotificationSubscription(
+          notificationsListener.current
+        );
+        Notifications.removeNotificationSubscription(responseListener.current);
+      };
+    }
   }, []);
 
   return (
