@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 const ScoresContainer = styled.View`
   width: 330;
   height: 64;
-  background: ${props => props.theme.containersBg};
+  background: ${(props) => props.theme.containersBg};
   border-radius: 25;
   margin-top: 48;
   justify-content: space-between;
@@ -33,7 +33,9 @@ const Scores = () => {
 
   return (
     fontsLoaded ? 
-    <View>
+    <View style={{
+      zIndex: -1
+    }}>
       <ScoresContainer>
         <PointsText
           style={{

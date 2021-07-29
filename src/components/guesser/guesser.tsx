@@ -2,12 +2,7 @@
 // eslint-disable-next-line no-use-before-define
 import React, { useEffect, useState } from 'react';
 import {
-  SafeAreaView,
-  Text,
-  StyleSheet,
   Platform,
-  Button,
-  Vibration,
   View,
 } from 'react-native';
 import styled from 'styled-components/native';
@@ -16,30 +11,8 @@ import AppLoading from 'expo-app-loading';
 import CodeInput from '../code-input/code-input';
 import { Inter_400Regular } from '@expo-google-fonts/inter';
 import { useSelector } from 'react-redux';
-
-const styles = StyleSheet.create({
-  root: { padding: 20 },
-  codeFieldRoot: { justifyContent: 'center' },
-  cell: {},
-  focusCell: {
-    borderColor: '#C75B39',
-  },
-});
-
-const CellsStyled = styled.Text`
-  font-size: 35;
-  border-width: 2;
-  line-height: 48;
-  text-align: center;
-  margin-right: 4;
-  color: ${(props: { theme: { TextColor: string } }) => props.theme.TextColor};
-  width: 33px;
-  height: 54px;
-  border-color: "rgba(0, 0, 0, 0)";
-
-  background: ${(props) => props.theme.binaryText};
-  border-radius: 8;
-`;
+import { setIsGuesserLoaded } from '../../redux/features/misc/miscSilce';
+import { useDispatch } from 'react-redux';
 
 const GuesserContainer = styled.View`
   width: 330;
@@ -70,6 +43,8 @@ const CurrentDigitStyled = styled.Text`
 const Guesser = () => {
   const currentBinary = useSelector((state: any) => state.guesser.currentBinary)
 
+  const dispatch = useDispatch()
+
   const [fontsLoaded] = useFonts({
     VT323_400Regular,
     Inter_400Regular,
@@ -82,13 +57,13 @@ const Guesser = () => {
       justifyContent: 'center',
       alignContent: 'center',
       position: 'absolute',
-      transform: Platform.OS === ('android' || 'ios') ? [{translateY: 450}] : [{translateY: 380}],
+      transform: Platform.OS === ('android' || 'ios') ? [{translateY: 205}] : [{translateY: 205}],
       elevation: 30,
       zIndex: 30
     }}>
     <CodeInput />
     </View>
-    <GuesserContainer
+    <GuesserContainer onLayout={() => {dispatch(setIsGuesserLoaded(true))}}
       style={{
         shadowColor: '#86b6ff8f',
         shadowOffset: {
@@ -97,6 +72,7 @@ const Guesser = () => {
         },
         shadowOpacity: 0.32,
         shadowRadius: 5.46,
+        zIndex: -1
       }}
     >
       <View style={{ marginTop: 36 }}>

@@ -1,12 +1,11 @@
 /* eslint-disable react/jsx-filename-extension */
 // eslint-disable-next-line no-use-before-define
-import React, { useState, ReactElement } from "react";
+import React, { ReactElement } from "react";
 import {
   View,
   Text,
   StyleSheet,
   Pressable,
-  Animated,
   Platform,
   Vibration,
 } from "react-native";
@@ -31,72 +30,18 @@ import {
 } from "../../redux/features/guesser-d/guesserSlice";
 import { useEffect } from "react";
 import Cells from "./components/cells";
-
-const styles = StyleSheet.create({
-  focusedCell: {
-    borderColor: "#C75B39",
-    borderWidth: Platform.OS === "web" ? 3 : 2,
-  },
-  unfocusedCell: {
-    borderWidth: 0,
-  },
-  cell: {
-    backgroundColor: "#212121",
-    borderRadius: 8,
-    color: "white",
-    fontSize: 30,
-    width: 30,
-    height: 50,
-    display: "flex",
-    marginBottom: 20,
-    marginLeft: 20,
-    textAlign: "center",
-    justifyContent: "center",
-    alignItems: "center",
-    lineHeight: 50,
-  },
-  container: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonMove: {
-    width: 48,
-    height: 48,
-    backgroundColor: "#212121",
-    borderRadius: 100,
-    textAlign: "center",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  buttonDigit: {
-    width: 64,
-    height: 64,
-    backgroundColor: "#212121",
-    borderRadius: 100,
-    textAlign: "center",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  buttonDigitText: {
-    width: 23,
-    height: 51,
-    fontStyle: "normal",
-    fontWeight: "normal",
-    fontSize: 36,
-    lineHeight: 51,
-    color: "#5EB8FF",
-  },
-  buttonsContainer: {
-    flexDirection: "row",
-    marginTop: 20,
-    alignItems: "center",
-  },
-});
+import { WhichOS, setCursorWeb } from "../../utils/basedMethods.ts";
 
 export default function CodeInput() {
-  const inputCode: Array<string> = useSelector((state: any) => state.guesser.inputCode);
-  const cellIndex: number = useSelector((state: any) => state.guesser.cellIndex);
-  const digitNumber: number = useSelector((state: any) => state.guesser.digitNumber);
+  const inputCode: Array<string> = useSelector(
+    (state: any) => state.guesser.inputCode
+  );
+  const cellIndex: number = useSelector(
+    (state: any) => state.guesser.cellIndex
+  );
+  const digitNumber: number = useSelector(
+    (state: any) => state.guesser.digitNumber
+  );
 
   const dispatch = useDispatch();
 
@@ -105,7 +50,14 @@ export default function CodeInput() {
     return (digitNumber + 1).toString(2);
   };
 
-  const CELL_COUNT: number = useSelector((state: any) => state.guesser.cellCount);
+  const CELL_COUNT: number = useSelector(
+    (state: any) => state.guesser.cellCount
+  );
+
+  const vibrationEnabled: boolean = useSelector(
+    (state: { misc: { vibrationEnabled: boolean } }) =>
+      state.misc.vibrationEnabled
+  );
 
   // Function to check if the input is correct
   const isInputCorrect = (inputValue: string | null): void => {
@@ -117,7 +69,9 @@ export default function CodeInput() {
       dispatch(setCellCount(1));
       dispatch(setInputCodeManually([]));
       dispatch(clearCellIndex());
-      Vibration.vibrate(10 * 10);
+      if (vibrationEnabled) {
+        Vibration.vibrate(10 * 10);
+      }
     } else {
       dispatch(setScoreType("Try Again!"));
     }
@@ -188,9 +142,7 @@ export default function CodeInput() {
     if (i === c) return cells;
     cells.push(
       <View key={i}>
-        <Cells
-          i={i}
-        />
+        <Cells i={i} />
       </View>
     );
     return cellRoot(c, i + 1, cells);
@@ -203,7 +155,10 @@ export default function CodeInput() {
       </View>
       <View style={styles.buttonsContainer}>
         <Pressable
-          style={({ pressed }) => [{ marginRight: 10 }, styles.buttonMove]}
+          style={({ pressed }) => [
+            { marginRight: 10, ...setCursorWeb() },
+            styles.buttonMove,
+          ]}
           onPress={() => moveThroughCells("left")}
         >
           <Svg
@@ -216,15 +171,18 @@ export default function CodeInput() {
             strokeOpacity="0.87"
             strokeLinecap="round"
             strokeLinejoin="round"
-            style={Platform.OS === "web" && { userSelect: "none" }}
+            style={[
+              Platform.OS === "web" && { userSelect: "none" },
+              { left: 15, position: "absolute" },
+            ]}
           >
             <Path
               d="M12.75 2.75L2.25 11L12.75 19.25"
               stroke="white"
-              stroke-opacity="0.87"
-              stroke-width="4"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeOpacity="0.87"
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </Svg>
         </Pressable>
@@ -253,8 +211,21 @@ export default function CodeInput() {
         >
           <Text style={styles.buttonDigitText}>1</Text>
         </Pressable>
+        {/* <Pressable
+          style={[styles.buttonDigit, { marginLeft: 7 }, setCursorWeb()]}
+          onPress={inputCode.length ? deleteCode : null}
+        >
+          <Text
+            style={[
+              { color: "white" },
+              WhichOS.isLargeScreenOS() ? { userSelect: "none" } : null,
+            ]}
+          >
+            Delete
+          </Text>
+        </Pressable> */}
         <Pressable
-          style={[styles.buttonMove, { marginLeft: 10 }]}
+          style={[styles.buttonMove, { marginLeft: 10, ...setCursorWeb() }]}
           onPress={() => moveThroughCells("right")}
         >
           <Svg
@@ -272,29 +243,75 @@ export default function CodeInput() {
             <Path
               d="M2.25 19.25L12.75 11L2.25 2.75"
               stroke="white"
-              stroke-opacity="0.87"
-              stroke-width="4"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeOpacity="0.87"
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </Svg>
         </Pressable>
-        {
-          <Pressable
-            style={styles.buttonDigit}
-            onPress={inputCode.length ? deleteCode : null}
-          >
-            <Text
-              style={[
-                { color: "white" },
-                Platform.OS === "web" ? { userSelect: "none" } : null,
-              ]}
-            >
-              Delete
-            </Text>
-          </Pressable>
-        }
       </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  focusedCell: {
+    borderColor: "#C75B39",
+    borderWidth: Platform.OS === "web" ? 3 : 2,
+  },
+  unfocusedCell: {
+    borderWidth: 0,
+  },
+  cell: {
+    backgroundColor: "#212121",
+    borderRadius: 8,
+    color: "white",
+    fontSize: 30,
+    width: 30,
+    height: 50,
+    display: "flex",
+    marginBottom: 20,
+    marginLeft: 20,
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    lineHeight: 50,
+  },
+  container: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonMove: {
+    width: 48,
+    height: 48,
+    backgroundColor: "#212121",
+    borderRadius: 100,
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonDigit: {
+    width: 64,
+    height: 64,
+    backgroundColor: "#212121",
+    borderRadius: 100,
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonDigitText: {
+    width: 23,
+    height: 51,
+    fontStyle: "normal",
+    fontWeight: "normal",
+    fontSize: 36,
+    lineHeight: 51,
+    color: "#5EB8FF",
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+    marginTop: 20,
+    alignItems: "center",
+  },
+});
