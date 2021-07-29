@@ -1,12 +1,12 @@
 import React from "react";
-import styled, { ThemeProvider } from "styled-components/native";
+import { ThemeProvider } from "styled-components/native";
 import { useSelector } from "react-redux";
 import { Platform, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import Themes from "../../styles/theme/theme";
-import BlackLayer from "../black-layer/black-layer";
+import BlackLayer from "../settings-black-layer/black-layer";
 import { WhichOS } from "../../utils/basedMethods";
-import BackgroundImage from "../background-image/background-image.tsx";
+import BackgroundImage from "../background-image/background-image";
 import AnimatedSplashC from "../animated-splash/animated-splash";
 
 const Cwrapper = (props: {

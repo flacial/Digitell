@@ -5,7 +5,7 @@
     "kind": "Directory"
   },
   "applicationId": "digitell.com.game",
-  "variantName": "processReleaseResources",
+  "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",

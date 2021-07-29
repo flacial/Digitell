@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "632602071594",
+    "project_id": "digitell-7bbf9",
+    "storage_bucket": "digitell-7bbf9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:632602071594:android:f5d15d41fd690f76ab2953",
+        "android_client_info": {
+          "package_name": "digitell.com.game"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "632602071594-hs5nvlikvvsdo92u8fm1ojdfd4sfjvdt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnJvn_v83pgyZvgPDgGGfY0UT6YHsLsBk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "632602071594-hs5nvlikvvsdo92u8fm1ojdfd4sfjvdt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

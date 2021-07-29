@@ -4,11 +4,23 @@
     "slug": "Digitell",
     "version": "0.5.0",
     "orientation": "portrait",
-    "icon": "./src/assets/images/icon2.png",
+    "icon": "./src/assets/images/res/drawable-xxxhdpi/ic_stat_0.png",
     "splash": {
       "image": "./src/assets/images/splash2.png",
       "resizeMode": "contain",
       "backgroundColor": "#fff"
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification_icon.png",
+          "color": "#ffffff"
+        }
+      ]
+    ],
+    "notification": {
+      "icon": "./assets/notification_icon.png"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
