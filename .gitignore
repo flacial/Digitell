@@ -68,3 +68,4 @@ buck-out/
 web-build/
 
 # @end expo-cli
+android/app/release/app-release.apk
