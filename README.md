@@ -7,4 +7,4 @@ A random binary guessing game that runs on Web, Mobile, and soon, Desktop.
 ### Design
 It was made on Figma: [Design link](https://www.figma.com/file/LOdwcR8yNqPIijQKErtM4f/Digitell-Void?node-id=0%3A1)
 
-Designed by: [NHKomaiha](https://github.com/NHKomaiha)
+Designed by: [XEROling](https://github.com/XEROling)
